@@ -1071,3 +1071,11 @@ a:hover {
   border: 1px solid #cccccc;
   border-bottom-color: transparent;
 }
+
+.height-10{
+  height: 10rem;
+}
+
+.width-10{
+  width: 10rem;
+}
