@@ -25,8 +25,47 @@ CubeModel.prototype = {
         if(this.prizesSeen.indexOf(this.sides[side]) === -1){
             this.prizesSeen << this.sides[side];
         }
+    },
+    setRandPrizeOn: function(side){
+        var newPrize = this.delegate.pickRandPrize;
+        this.sides[side] = newPrize;
+        this.addPrizeToSeen(side);
+    },
+    timesSeen: function(prize){
+        var self = this;
+        return _.filter(self.sides, function(side){ return side === prize }).length
+    },
+    pickNextPrize: function(){
+
     }
 }
+
+function CubeController(delegate, prizeGallery){
+    this.delegate = delegate;
+    this.prizeGallery = prizeGallery;
+}
+
+CubeController.prototype = {
+    pickRandPrize: function(){
+        var self = this;
+        return _.sample(self.prizeGallery)
+    },
+    pickNotThisPrize: function(prize){
+        var self = this;
+        return _.sample(_.without(self.prizeGallery, prize))
+    },
+    pickPrize: function(prize){
+        var prizes = this.prizeGallery;
+        if(prize){
+            return _.sample(_.without(prizes, prize));
+        }else{
+            return _.sample(prizes);
+        }
+    },
+
+}
+
+
 
 function GameStateEvaluator(delegate){
     this.delegate = delegate;
@@ -34,17 +73,13 @@ function GameStateEvaluator(delegate){
 
 GameStateEvaluator.prototype = {
     evaluateSides: function(cubeArray){
-        var prizesSeen = [];
+        var allPrizesSeen = [];
         for(var i = 0; i < cubeArray.length; i++){
-            var sides = cubeArray[i].sides;
-            for(var x = 1; x <= sides.length; x++){
-                if(sides[x]){
-                    prizesSeen << sides[x];
-                }
-            }
+            allPrizesSeen += cubeArray[i].prizesSeen;
         }
     }
 }
+
 
 model for cube
 view for cube
@@ -52,4 +87,5 @@ controller for cube
 
 controller for game
 model for game
+model for prizegallery
 model for evaluator
