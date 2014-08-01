@@ -74,9 +74,15 @@ function GameStateEvaluator(delegate){
 GameStateEvaluator.prototype = {
     evaluateSides: function(cubeArray){
         var allPrizesSeen = [];
+        var allPrizeesFacing = [];
+        var prizeValueOddsMultiplier;
         for(var i = 0; i < cubeArray.length; i++){
             allPrizesSeen += cubeArray[i].prizesSeen;
         }
+        for(var i = 0; i < cubeArray.length; i++){
+            allPrizesFacing += cubeArray[i].sides[cubeArray[i].facing];
+        }
+
     },
 
 }
@@ -96,7 +102,7 @@ PrizeGallery.prototype = {
   retrieveValues: function(data){
     return prizeData[values]
   },
-  prizeValueOddsMultiplier: function(prize){
+  calculatePrizeMultiplier: function(prize){
       return values[this.prizes.indexOf(prize)];
     }
 }
