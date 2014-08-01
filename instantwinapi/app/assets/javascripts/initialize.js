@@ -27,7 +27,7 @@ CubeModel.prototype = {
         }
     },
     setRandPrizeOn: function(side){
-        var newPrize = this.delegate.pickRandPrize;
+        var newPrize = this.delegate.pickPrize();
         this.sides[side] = newPrize;
         this.addPrizeToSeen(side);
     },
@@ -35,36 +35,48 @@ CubeModel.prototype = {
         var self = this;
         return _.filter(self.sides, function(side){ return side === prize }).length
     },
-    pickNextPrize: function(){
-
+    setNextPrizeOn: function(side){
+        var newPrize = this.delegate.retrieveEvaluatedPrize(prize);
+        this.sides[side] = newPrize;
+        this.addPrizeToSeen(side);
     }
 }
 
-function CubeController(delegate, prizeGallery){
+function CubeController(delegate){
     this.delegate = delegate;
-    this.prizeGallery = prizeGallery;
+
 }
 
 CubeController.prototype = {
-    pickRandPrize: function(){
-        var self = this;
-        return _.sample(self.prizeGallery.prizes)
-    },
-    pickNotThisPrize: function(prize){
-        var self = this;
-        return _.sample(_.without(self.prizeGallery.prizes, prize))
-    },
+    // pickRandPrize: function(){
+    //     var self = this;
+    //     return _.sample(self.prizeGallery.prizes)
+    // },
+    // pickNotThisPrize: function(prize){
+    //     var self = this;
+    //     return _.sample(_.without(self.prizeGallery.prizes, prize))
+    // },
     pickPrize: function(prize){
-        var prizes = this.prizeGallery.prizes;
+        var prizes = this.delegate.prizeGallery.prizes;
         if(prize){
             return _.sample(_.without(prizes, prize));
         }else{
             return _.sample(prizes);
         }
     },
-
+    retrieveEvaluatedPrize: function(prize){
+      return this.delegate.gameStateEvaluator.evaluateMatch(prize)
+    }
 }
 
+function GameController(prizeGallery){
+  gameStateEvaluator = GameStateEvaluator.new(this);
+  this.prizeGallery = prizeGallery;
+}
+
+GameController.prototype = {
+
+}
 
 
 function GameStateEvaluator(delegate){
@@ -75,7 +87,6 @@ GameStateEvaluator.prototype = {
     evaluateSides: function(cubeArray){
         var allPrizesSeen = [];
         var allPrizeesFacing = [];
-        var prizeValueOddsMultiplier;
         for(var i = 0; i < cubeArray.length; i++){
             allPrizesSeen += cubeArray[i].prizesSeen;
         }
@@ -84,7 +95,15 @@ GameStateEvaluator.prototype = {
         }
 
     },
-
+    evaluateMatch: function(prize){
+     var prizeValueOddsMultiplier =  this.delegate.prizeGallery.calculatePrizeMultiplier(prize);
+     // logic to determine match
+     if(match){
+      return prize;
+     }else{
+      return this.delegate.pickPrize(prize);
+     }
+    }
 }
 
 PrizeData =  {prizes: ["10giftcard", "50giftcard", "100giftcard", "500giftcard", "1000giftcard",  "10000giftcard"],
