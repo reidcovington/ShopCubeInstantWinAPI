@@ -48,14 +48,14 @@ function CubeController(delegate, prizeGallery){
 CubeController.prototype = {
     pickRandPrize: function(){
         var self = this;
-        return _.sample(self.prizeGallery)
+        return _.sample(self.prizeGallery.prizes)
     },
     pickNotThisPrize: function(prize){
         var self = this;
-        return _.sample(_.without(self.prizeGallery, prize))
+        return _.sample(_.without(self.prizeGallery.prizes, prize))
     },
     pickPrize: function(prize){
-        var prizes = this.prizeGallery;
+        var prizes = this.prizeGallery.prizes;
         if(prize){
             return _.sample(_.without(prizes, prize));
         }else{
@@ -77,9 +77,29 @@ GameStateEvaluator.prototype = {
         for(var i = 0; i < cubeArray.length; i++){
             allPrizesSeen += cubeArray[i].prizesSeen;
         }
-    }
+    },
+
 }
 
+PrizeData =  {prizes: ["10giftcard", "50giftcard", "100giftcard", "500giftcard", "1000giftcard",  "10000giftcard"],
+                     values: [10, 50, 100, 500, 1000, 10000]}
+
+function PrizeGallery (prizeData){
+  this.prizes = retrievePrizes(prizeData);
+  this.values = retrieveValues(prizeData);
+}
+
+PrizeGallery.prototype = {
+  retrievePrizes: function(data){
+    return prizeData[prizes]
+  },
+  retrieveValues: function(data){
+    return prizeData[values]
+  },
+  prizeValueOddsMultiplier: function(prize){
+      return values[this.prizes.indexOf(prize)];
+    }
+}
 
 model for cube
 view for cube
