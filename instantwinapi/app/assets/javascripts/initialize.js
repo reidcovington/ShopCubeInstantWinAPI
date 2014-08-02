@@ -84,6 +84,7 @@ function GameStateEvaluator(delegate){
 }
 
 GameStateEvaluator.prototype = {
+    getPrize: function(){}
     evaluateSides: function(cubeArray){
         var allPrizesSeen = [];
         var allPrizeesFacing = [];
@@ -96,7 +97,7 @@ GameStateEvaluator.prototype = {
 
     },
     evaluateMatch: function(prize){
-     var prizeValueOddsMultiplier =  this.delegate.prizeGallery.calculatePrizeMultiplier(prize);
+     var prizeValueOddsMultiplier =  this.delegate.makePrize() //prizeGallery.calculatePrizeMultiplier(prize);
      // logic to determine match
      if(match){
       return prize;
@@ -126,11 +127,24 @@ PrizeGallery.prototype = {
     }
 }
 
-model for cube
-view for cube
-controller for cube
+model for cube  holds cube info
+view for cube draws to cube
+controller for cube tells its cube what to do
 
-controller for game
-model for game
+view for game listens for cube turns, tells game controller
+controller for game tells specific cube to update view/model
 model for prizegallery
 model for evaluator
+
+
+
+GameController.prototype = {
+  setPrize: function(prize){}
+  rotateCube: function(cube, direction){
+    prize = this.prizeManager.generatePrize()
+    this.cubes[cube].
+    this.cubes[cube].rotate(direction);
+  }
+}
+
+
