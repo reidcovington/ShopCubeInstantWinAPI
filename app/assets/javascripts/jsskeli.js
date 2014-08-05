@@ -21,20 +21,23 @@ clicking on a button rotates cube in that direction
 
 GameController(){
     // attach 6x cubeControllers
-    cubeController1 = new CubeController();
-    cubeController2 = new CubeController();
-    cubeController3 = new CubeController();
-    cubeController4 = new CubeController();
-    cubeController5 = new CubeController();
-    cubeController6 = new CubeController();
+    this.cubeControllers = [cubeController1 = new CubeController(),
+                                cubeController2 = new CubeController(),
+                                cubeController3 = new CubeController(),
+                                cubeController4 = new CubeController(),
+                                cubeController5 = new CubeController(),
+                                cubeController6 = new CubeController()]
     // attach gameView
-    gameView = new GameView(this);
+    this.gameView = new GameView(this);
     // attach prizeManager
-    prizeManager = new PrizeManager();
+    this.prizeManager = new PrizeManager();
 }
 GameController.prototype = {
     // tell all cubes to deactivate, tell particular cube its active
     updateActiveCube: function(number){
+        for (i=0; i < this.cubeControllers.length; i++){
+        this.cubeControllers[i].cubeView.markInactive(i+1)
+        }
         (cubeController+number).cubeView.markActive(number);
     }
     statusEval(<current cube>)
@@ -82,8 +85,8 @@ PrizeManager.prototype = {
 
 CubeController(){
     // attach view, model
-    cubeModel = CubeModel.new(this);
-    cubeView = CubeView.new(this);
+    this.cubeModel = CubeModel.new(this);
+    this.cubeView = CubeView.new(this);
 }
 CubeController.prototype = {
     produce cube data for GameController
@@ -110,7 +113,12 @@ CubeView(delegate){
     this.active = false;
 }
 CubeView.prototype = {
-    // mark cube active
+    // mark cube active + inactive
+    markInactive: function(number){
+        this.active = true;
+        this.hideButtons(number);
+        $("cubeface"+number).removeClass("active");
+    },
     markActive: function(number){
         this.active = true;
         this.showButtons(number);
@@ -120,8 +128,11 @@ CubeView.prototype = {
     // show buttons
     showButtons: function(number){
         $("cubeface"+number+"buttons").show();
-    }
-    hide buttons
+    },
+    // hide buttons
+    hideButtons: function(number){
+        $("cubeface"+number+"buttons").hide();
+    },
     on <position> button click
         - rotate <position> direction
         - tell CubeController eval side facing(<side>)
