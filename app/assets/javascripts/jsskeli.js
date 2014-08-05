@@ -50,7 +50,15 @@ GameController.prototype = {
         }
     },
     statusEval: function(cubeController){
-        this.prizeManager.generatePrize(cubeController);
+        var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
+             facesOfOtherCubes = [],
+             currentCubePrizes = cubeController.getAllSidePrizes();
+        for(var i = 0; i < this.cubeControllers.length; i++){
+            if(i != skipCubeIndex){
+                facesOfOtherCubes += this.cubeControllers[i].getFacingPrize()
+            }
+        }
+        this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes);
     },
     statusEval(<current cubeController>)
         - pulls all other cube side data
@@ -86,15 +94,44 @@ GameView.prototype = {
 
 
 function PrizeManager(){
+    this.cubesInitiated = 0;
     this.determineWinner();
 }
 PrizeManager.prototype = {
+    fetchPrizes: function(){
+        this.prizePool = $.ajax(stuff);
+    },
     determineWinner: function(){
         // executes probability and determines winning prize(null if losing)
         this.winningPrize = prize;
+        if(!prize){
+            this.prizePool = _.sample(this.prizePool, 6);//=> reduce 6 random prizes
+        }
     },
-    generatePrize(currentCubeData, otherCubeData) -> do fancy algorithm stuff, return a prize
-    _reduceToUniqueness
+    generatePrize: function(currentCubePrizes, facesOfOtherCubes){
+        possiblePrizes = _.without(this.prizePool, currentCubePrizes);
+        if(this.winningPrize){
+            if( currentCubePrizes.length === 0){
+                this.cubesInitiated += 1;
+                this.genBlankCubePrize(this.cubesInitiated);
+            }else{
+                this.genDirtyCubePrize()
+            }
+            complicated stuff with odds
+        }else{
+            return _.sample(possiblePrizes, 1)
+        }
+    },
+    genBlankCubePrize: function(cubeNumber){
+        var self = this;
+        if(cubeNumber === 1){
+            return self.winningPrize;
+        }else if(cubeNumber < 6){
+            return _.sample([self.winningPrize] + _.sample(self.prizePool, 1)], 1);
+        }else{
+            return _.sample([self.winningPrize] + _.sample(self.prizePool, self.numberOfTurnsLeft - 1)], 1)
+        }
+    }
 
 }
 
