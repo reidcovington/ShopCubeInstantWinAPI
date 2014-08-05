@@ -20,12 +20,23 @@ clicking on a button rotates cube in that direction
 
 
 GameController(){
-    attach 6x cubeControllers
-    attach gameView
-    attach prizeManager
+    // attach 6x cubeControllers
+    cubeController1 = new CubeController();
+    cubeController2 = new CubeController();
+    cubeController3 = new CubeController();
+    cubeController4 = new CubeController();
+    cubeController5 = new CubeController();
+    cubeController6 = new CubeController();
+    // attach gameView
+    gameView = new GameView(this);
+    // attach prizeManager
+    prizeManager = new PrizeManager();
 }
 GameController.prototype = {
-    tell all cubes to deactivate, tell particular cube its active
+    // tell all cubes to deactivate, tell particular cube its active
+    updateActiveCube: function(number){
+        (cubeController+number).cubeView.markActive(number);
+    }
     statusEval(<current cube>)
         - pulls all other cube side data
         - sends to prizeManager.generatePrize(<current cube>, <other cube data>)
@@ -42,12 +53,21 @@ GameController.prototype = {
 }
 
 
-GameView(){
-    listen to clicks on cubes for setting active
+GameView(delegate){
+    // listen to clicks on cubes for setting active
+    this.delegate = delegate;
+    this._setupCubeClickListeners();
 }
 GameView.prototype = {
-    tell GameController which cube got clicked
-    updateMoveCount -> lower move counter by 1
+    // tell GameController which cube got clicked
+    _setupCubeClickListeners: function(){
+        var self = this;
+        $('#cubeface').click(function(e){
+            e.preventDefault();
+            self.delegate.updateActiveCube(this.indexOf())
+        };
+    }
+    // updateMoveCount -> lower move counter by 1 (this happens in GC)
 }
 
 
@@ -61,7 +81,9 @@ PrizeManager.prototype = {
 
 
 CubeController(){
-    attach view, model
+    // attach view, model
+    cubeModel = CubeModel.new(this);
+    cubeView = CubeView.new(this);
 }
 CubeController.prototype = {
     produce cube data for GameController
@@ -72,20 +94,33 @@ CubeController.prototype = {
 }
 
 
-CubeModel(){
+CubeModel(delegate){
     hold cube info
+    this.delegate = delegate;
 }
 CubeModel.prototype = {
     assignPrize(prize) -> this.sides[this.facing] = prize
 }
 
 
-CubeView(){
+CubeView(delegate){
     draw cube, buttons
     listen to buttons
+    this.delegate = delegate;
+    this.active = false;
 }
 CubeView.prototype = {
-    show buttons
+    // mark cube active
+    markActive: function(number){
+        this.active = true;
+        this.showButtons(number);
+        $("cubeface"+number).addClass("active");
+
+    },
+    // show buttons
+    showButtons: function(number){
+        $("cubeface"+number+"buttons").show();
+    }
     hide buttons
     on <position> button click
         - rotate <position> direction
