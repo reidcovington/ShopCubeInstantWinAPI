@@ -21,12 +21,12 @@ clicking on a button rotates cube in that direction
 
 GameController(){
     // attach 6x cubeControllers
-    this.cubeControllers = [cubeController1 = new CubeController(),
-                                cubeController2 = new CubeController(),
-                                cubeController3 = new CubeController(),
-                                cubeController4 = new CubeController(),
-                                cubeController5 = new CubeController(),
-                                cubeController6 = new CubeController()]
+    this.cubeControllers = [new CubeController(),
+                                new CubeController(),
+                                new CubeController(),
+                                new CubeController(),
+                                new CubeController(),
+                                new CubeController()]
     // attach gameView
     this.gameView = new GameView(this);
     // attach prizeManager
@@ -35,10 +35,13 @@ GameController(){
 GameController.prototype = {
     // tell all cubes to deactivate, tell particular cube its active
     updateActiveCube: function(number){
-        for (i=0; i < this.cubeControllers.length; i++){
-        this.cubeControllers[i].cubeView.markInactive(i+1)
+        for (var i=0; i < this.cubeControllers.length; i++){
+            if(i === number){
+                this.cubeControllers[i].markActive(i);
+            }else{
+                this.cubeControllers[i].markInactive(i);
+            }
         }
-        (cubeController+number).cubeView.markActive(number);
     }
     statusEval(<current cube>)
         - pulls all other cube side data
@@ -89,6 +92,12 @@ CubeController(){
     this.cubeView = CubeView.new(this);
 }
 CubeController.prototype = {
+    markInactive: function(number){
+        this.cubeView.markInactive(number)
+    },
+    markActive: function(number){
+        this.cubeView.markActive(number)
+    },
     produce cube data for GameController
     deactivate view(when any cube is clicked)
     activate view(when this cube is clicked)
@@ -123,7 +132,6 @@ CubeView.prototype = {
         this.active = true;
         this.showButtons(number);
         $("cubeface"+number).addClass("active");
-
     },
     // show buttons
     showButtons: function(number){
