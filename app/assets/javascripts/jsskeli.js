@@ -52,10 +52,15 @@ GameController.prototype = {
     statusEval: function(cubeController){
         var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
              facesOfOtherCubes = [],
+             totalMatches = 0,
              currentCubePrizes = cubeController.getAllSidePrizes();
         for(var i = 0; i < this.cubeControllers.length; i++){
             if(i != skipCubeIndex){
                 facesOfOtherCubes += this.cubeControllers[i].getFacingPrize()
+                facesOfOtherCubes = facesOfOtherCubes.sort()
+                for(var x = 0; x < facesOfOtherCubes.length; x++){
+
+                }
             }
         }
         this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes);
@@ -95,34 +100,41 @@ GameView.prototype = {
 
 function PrizeManager(){
     this.cubesInitiated = 0;
-    this.determineWinner();
+    this.determinePrizes();
 }
 PrizeManager.prototype = {
     fetchPrizes: function(){
         this.prizePool = $.ajax(stuff);
     },
     determineWinner: function(){
+        return _.sample(["win", "lose"], 1)
+    },
+    determinePrizes: function(){
         // executes probability and determines winning prize(null if losing)
-        this.winningPrize = prize;
-        if(!prize){
-            this.prizePool = _.sample(this.prizePool, 6);//=> reduce 6 random prizes
+        if (determineWinner === "win"){
+            this.winningPrize =  _.sample(prizePool, 1)
+            this.prizePool =  _.sample((_.without(this.prizePool, this.winningPrize)), 6)
+        }else{
+        this.winningPrize = null;
+        this.prizePool =  _.sample(this.prizePool, 6)
         }
     },
     generatePrize: function(currentCubePrizes, facesOfOtherCubes){
-        possiblePrizes = _.without(this.prizePool, currentCubePrizes);
+        possibleRemainingPrizes = _.without(this.prizePool, currentCubePrizes);
+        currentMatches =
         if(this.winningPrize){
             if( currentCubePrizes.length === 0){
                 this.cubesInitiated += 1;
-                this.genBlankCubePrize(this.cubesInitiated);
+                this.genBlankCubePrizeForWinner(this.cubesInitiated);
             }else{
                 this.genDirtyCubePrize()
             }
             complicated stuff with odds
         }else{
-            return _.sample(possiblePrizes, 1)
+            return _.sample(possibleRemainingPrizes, 1)
         }
     },
-    genBlankCubePrize: function(cubeNumber){
+    genBlankCubePrizeForWinner: function(cubeNumber){
         var self = this;
         if(cubeNumber === 1){
             return self.winningPrize;
