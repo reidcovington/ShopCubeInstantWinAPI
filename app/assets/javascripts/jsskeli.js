@@ -59,11 +59,13 @@ GameController.prototype = {
                 facesOfOtherCubes += this.cubeControllers[i].getFacingPrize()
                 facesOfOtherCubes = facesOfOtherCubes.sort()
                 for(var x = 0; x < facesOfOtherCubes.length; x++){
-
+                    if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
+                        totalMatches += 1
+                    }
                 }
             }
         }
-        this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes);
+        this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, totalMatches);
     },
     statusEval(<current cubeController>)
         - pulls all other cube side data
@@ -112,27 +114,52 @@ PrizeManager.prototype = {
     determinePrizes: function(){
         // executes probability and determines winning prize(null if losing)
         if (determineWinner === "win"){
-            this.winningPrize =  _.sample(prizePool, 1)
-            this.prizePool =  _.sample((_.without(this.prizePool, this.winningPrize)), 6)
+            this.winningPrize =  _.sample(prizePool, 1);
+            this.prizePool =  [this.winningPrize] + _.sample((_.without(this.prizePool, this.winningPrize)), 5);
+            this.reducedPrizePool = [this.winningPrize] + _.sample(this.prizePool, 2);
         }else{
         this.winningPrize = null;
-        this.prizePool =  _.sample(this.prizePool, 6)
+        this.prizePool =  _.sample(this.prizePool, 6);
+        this.reducedPrizePool = _.sample(this.prizePool, 3);
         }
     },
-    generatePrize: function(currentCubePrizes, facesOfOtherCubes){
-        possibleRemainingPrizes = _.without(this.prizePool, currentCubePrizes);
-        currentMatches =
-        if(this.winningPrize){
-            if( currentCubePrizes.length === 0){
+    generatePrize: function(currentCubePrizes, facesOfOtherCubes, totalMatches){
+        var possibleRemainingPrizes = _.without(this.prizePool, currentCubePrizes),
+              possibleRemainingReducedPrizes = _.without(this.reducedPrizePool, currentCubePrizes)
+        if(this.cubesInitiated === 0){
+            if(this.winningPrize){
                 this.cubesInitiated += 1;
-                this.genBlankCubePrizeForWinner(this.cubesInitiated);
+                return this.winningPrize
             }else{
-                this.genDirtyCubePrize()
+                this.cubesInitiated += 1;
+                return _.sample(this.reducedPrizePool, 1)
             }
-            complicated stuff with odds
-        }else{
+        }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
             return _.sample(possibleRemainingPrizes, 1)
+        }else if(totalMatches < 5){
+            if(currentCubePrizes != this.reducedPrizePool){
+                return _.sample(possibleRemainingReducedPrizes, 1)
+            }else{
+                return _.sample(possibleRemainingPrizes, 1)
+            }
+        }else if(totalMatches === 5){
+            if(this.winningPrize){
+                return facesOfOtherCubes[0]
+            }else{
+                return _.sample((_.without(possibleRemainingPrizes, facesOfOtherCubes[0]) , 1)
+            }
         }
+        // if(this.winningPrize){
+        //     if( currentCubePrizes.length === 0){
+        //         this.cubesInitiated += 1;
+        //         this.genBlankCubePrizeForWinner(this.cubesInitiated);
+        //     }else{
+        //         this.genDirtyCubePrize()
+        //     }
+        //     complicated stuff with odds
+        // }else{
+        //     return _.sample(possibleRemainingPrizes, 1)
+        // }
     },
     genBlankCubePrizeForWinner: function(cubeNumber){
         var self = this;
