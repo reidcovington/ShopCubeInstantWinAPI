@@ -16,7 +16,7 @@ $(document).ready(function(){
     };
     GameController.prototype = {
         updateActiveCube: function(number){
-            for (var i=0; i < this.cubeControllers.length; i++){
+            for (var i = 0; i < this.cubeControllers.length; i++){
                 if(i === number){
                     this.cubeControllers[i].markActive(i);
                 }else{
@@ -30,7 +30,7 @@ $(document).ready(function(){
                  currentCubePrizes = cubeController.getAllSidePrizes();
             for(var i = 0; i < this.cubeControllers.length; i++){
                 if(i != skipCubeIndex){
-                    facesOfOtherCubes += this.cubeControllers[i].getFacingPrize()
+                    facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
                     facesOfOtherCubes = facesOfOtherCubes.sort()
                     for(var x = 0; x < facesOfOtherCubes.length; x++){
                         if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
@@ -152,8 +152,18 @@ $(document).ready(function(){
         fillNewFace: function(){
             this.delegate.statusEval(this);
         },
+        getAllSidePrizes: function(){
+            return this.cubeModel.fetchAllSidePrizes();
+        },
+        getFacingPrize: function(){
+            return this.cubeModel.fetchFacingPrizes();
+        },
+        getSideFacing: function(){
+            return this.cubeModel.fetchCurrentSide();
+        },
         addPrize: function(prize){
-            var currentSide = this.cubeModel.assignPrize(prize);
+            var currentSide = this.getSideFacing();
+            this.cubeModel.assignPrize(prize);
             this.cubeView.drawPrize(prize, currentSide);
         }
     };
@@ -174,9 +184,24 @@ $(document).ready(function(){
                 this.delegate.fillNewFace();
             }
         },
+        fetchAllSidePrizes: function(){
+            var allSides = [];
+            for(i = 0; i < this.sides.length; i++){
+                if(this.sides[i]){
+                    allSides.push(this.sides[i])
+                }
+            }
+            return allSides;
+        },
+        fetchFacingPrizes: function(){
+            return this.sides[this.facing];
+        },
+        fetchCurrentSide: function(){
+            return this.facing //temporary conviluted solution, prolly need to fix
+        },
         assignPrize: function(prize){
             this.sides[this.facing] = prize;
-            return this.facing //temporary conviluted solution, need to fix
+
         }
     };
 
