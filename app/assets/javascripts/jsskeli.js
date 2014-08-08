@@ -231,8 +231,8 @@ CubeModel.prototype = {
 
 
 CubeView(delegate){
-    draw cube, buttons
-    listen to buttons
+    // draw cube, buttons
+    // listen to buttons
     this.delegate = delegate;
     this.active = false;
     this._setupButtonClickListeners();
@@ -264,13 +264,30 @@ CubeView.prototype = {
             // self.delegate.updateActiveCube(this.indexOf())
 
         }
+    },
+    rotateUp: function(){
+    xAngle += 90;
+    $('#cube').css("-webkitTransform", "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)");
+    },
+    rotateDown: function(){
+    xAngle -= 90;
+    $('#cube').css("-webkitTransform", "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)");
+    },
+    rotateRight: function(){
+    yAngle += 90;
+    $('#cube').css("-webkitTransform", "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)");
+    },
+    rotateLeft: function(){
+    yAngle -= 90;
+    $('#cube').css("-webkitTransform", "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)");
     }
-    on <position> button click
-        - rotate <position> direction
-        - tell CubeController eval side facing(<side>)
-    drawPrize(prize)
+
+    // on <position> button click
+    //     - rotate <position> direction
+    //     - tell CubeController eval side facing(<side>)
+    // drawPrize(prize)
 }
-<div data-direction="left" class="button">left</div>
+// <div data-direction="left" class="button">left</div>
 
 
 

@@ -1,0 +1,76 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+#perspective {
+  -webkit-perspective: 1000px;
+  -webkit-perspective-origin: 80% 300px;
+  padding: 100px 100px 100px 100px;
+}
+
+#cube {
+  position: relative;
+  margin: 0 auto;
+  height: 400px;
+  width: 400px;
+  -webkit-transition: -webkit-transform 1s linear;
+  -webkit-transform-style: preserve-3d;
+}
+
+
+.face {
+  position: absolute;
+  height: 360px;
+  width: 360px;
+  padding: 20px;
+  background-color: rgba(50, 50, 50, .8);
+  border: 1px solid black;
+}
+
+.prize {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  padding: 30px;
+  /*background-color: red;*/
+}
+
+#cube .one  {
+  -webkit-transform: rotateX(90deg) translateZ(200px);
+}
+
+#cube .two {
+  -webkit-transform: translateZ(200px);
+}
+
+#cube .three {
+  -webkit-transform: rotateY(90deg) translateZ(200px);
+}
+
+#cube .four {
+  -webkit-transform: rotateY(180deg) translateZ(200px);
+}
+
+#cube .five {
+  -webkit-transform: rotateY(-90deg) translateZ(200px);
+}
+
+#cube .six {
+  -webkit-transform: rotateX(-90deg) translateZ(200px) rotate(180deg);
+}
+
+.button {
+  /*margin: 20px;*/
+}
