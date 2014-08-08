@@ -93,3 +93,9 @@ CubeView.prototype = {
     drawPrize(prize)
 }
 
+8/7/14:
+prizeGenerator - has 4 prizes, gives you one randomly whenever you call #generatePrize
+cubeController - assigns prize to new side
+gameController - checks for running out of turns and matching all 6 cubes
+
+graphical stuff(cubes, turning logic, etc)
