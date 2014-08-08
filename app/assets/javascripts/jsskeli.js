@@ -1,13 +1,14 @@
 $(document).ready(function(){
-    new GameController();
+    gameController = new GameController();
+});
 
     function GameController(){
-        this.cubeControllers = [new CubeController(),
-                                    new CubeController(),
-                                    new CubeController(),
-                                    new CubeController(),
-                                    new CubeController(),
-                                    new CubeController()];
+        this.cubeControllers = [new CubeController(this),
+                                    new CubeController(this),
+                                    new CubeController(this),
+                                    new CubeController(this),
+                                    new CubeController(this),
+                                    new CubeController(this)];
         this.gameView = new GameView(this);
         this.prizeManager = new PrizeManager();
         this.totalMoves = 10;
@@ -86,7 +87,7 @@ $(document).ready(function(){
             return _.sample(["win", "lose"], 1)
         },
         determinePrizes: function(){
-            if (determineWinner === "win"){
+            if (this.determineWinner === "win"){
                 this.winningPrize =  _.sample(prizePool, 1);
                 this.prizePool =  [this.winningPrize] + _.sample((_.without(this.prizePool, this.winningPrize)), 5);
                 this.reducedPrizePool = [this.winningPrize] + _.sample(this.prizePool, 2);
@@ -129,7 +130,8 @@ $(document).ready(function(){
         }
     };
 
-    function CubeController(){
+    function CubeController(delegate){
+        this.delegate = delegate;
         this.cubeModel = new CubeModel(this);
         this.cubeView = new CubeView(this);
     };
@@ -181,9 +183,17 @@ $(document).ready(function(){
     function CubeView(delegate){
         this.delegate = delegate;
         this.active = false;
+        this.xAngle = 0;
+        this.yAngle = 0;
         this._setupButtonClickListeners();
     };
     CubeView.prototype = {
+        _setupButtonClickListeners: function(){
+            var self = this;
+            $('[data-direction]').click(function(e){
+                self.delegate.receiveTurnDirection($(this).data('button-direction'));
+            })
+        },
         markInactive: function(number){
             this.active = true;
             this.hideButtons(number);
@@ -200,19 +210,14 @@ $(document).ready(function(){
         hideButtons: function(number){
             $(".cubeface"+number+"buttons").hide();
         },
-        _setupButtonClickListeners: function(){
-            var self = this;
-            $('[data-direction]').click(function(e){
-                self.delegate.receiveTurnDirection($(this).data('button-direction')) //=> "left"
-            })
-        },
         rotate: function(direction){
             var directions = direction.split(" ");
-            var xAngle = directions[0], yAngle = directions[1];
-            $('#cube').css("-webkitTransform", "rotateX("+xAngle+"deg) rotateY("+yAngle+"deg)");
-        },
+            this.xAngle += directions[0];
+            this.yAngle += directions[1];
+            $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+        }
     };
-});
+
 
 
 
