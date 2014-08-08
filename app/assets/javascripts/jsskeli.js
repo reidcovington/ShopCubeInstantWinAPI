@@ -25,31 +25,31 @@ $(document).ready(function(){
             }
         },
         statusEval: function(cubeController){
-            var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
-                 facesOfOtherCubes = [],
-                 currentCubePrizes = cubeController.getAllSidePrizes();
-            for(var i = 0; i < this.cubeControllers.length; i++){
-                if(i != skipCubeIndex){
-                    facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
-                    facesOfOtherCubes = facesOfOtherCubes.sort()
-                    for(var x = 0; x < facesOfOtherCubes.length; x++){
-                        if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
-                            totalMatches += 1
-                            if(totalMatches === 6){
-                                return this.triggerWin();
-                            }else{
-                                this.totalMoves -= 1;
-                                cubeController.gameView.updateMoveCount(this.totalMatches);
-                                if(this.totalMoves === 0){
-                                    this.triggerLose();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, totalMatches));
-            this.checkForTotalMatch();
+            // var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
+            //      facesOfOtherCubes = [],
+            //      currentCubePrizes = cubeController.getAllSidePrizes();
+            // for(var i = 0; i < this.cubeControllers.length; i++){
+            //     if(i != skipCubeIndex){
+            //         facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
+            //         facesOfOtherCubes = facesOfOtherCubes.sort()
+            //         for(var x = 0; x < facesOfOtherCubes.length; x++){
+            //             if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
+            //                 totalMatches += 1
+            //                 if(totalMatches === 6){
+            //                     return this.triggerWin();
+            //                 }else{
+            //                     this.totalMoves -= 1;
+            //                     cubeController.gameView.updateMoveCount(this.totalMatches);
+            //                     if(this.totalMoves === 0){
+            //                         this.triggerLose();
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            // cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, totalMatches));
+            // this.checkForTotalMatch();
         },
         triggerWin: function(){
             alert("You've Won!")
@@ -216,7 +216,7 @@ $(document).ready(function(){
         _setupButtonClickListeners: function(){
             var self = this;
             $('[data-direction]').click(function(e){
-                self.delegate.receiveTurnDirection($(this).data('button-direction'));
+                self.delegate.receiveTurnDirection($(this).data('direction'));
             })
         },
         markInactive: function(number){
@@ -237,8 +237,8 @@ $(document).ready(function(){
         },
         rotate: function(direction){
             var directions = direction.split(" ");
-            this.xAngle += directions[0];
-            this.yAngle += directions[1];
+            this.xAngle += parseInt(directions[0]);
+            this.yAngle += parseInt(directions[1]);
             $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
         }
     };
