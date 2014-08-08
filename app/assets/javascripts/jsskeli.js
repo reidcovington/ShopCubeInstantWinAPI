@@ -135,14 +135,18 @@ PrizeManager.prototype = {
                 return _.sample(this.reducedPrizePool, 1)
             }
         }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
-            return _.sample(possibleRemainingPrizes, 1)
+            if(currentCubePrizes != this.reducedPrizePool){
+                return _.sample(possibleRemainingReducedPrizes, 1)
+            }else{
+                return _.sample(possibleRemainingPrizes, 1)
+            }
         }else if(totalMatches < 5){
             if(currentCubePrizes != this.reducedPrizePool){
                 return _.sample(possibleRemainingReducedPrizes, 1)
             }else{
                 return _.sample(possibleRemainingPrizes, 1)
             }
-        }else if(totalMatches === 5){
+        }else{
             if(this.winningPrize){
                 return facesOfOtherCubes[0]
             }else{
@@ -161,16 +165,16 @@ PrizeManager.prototype = {
         //     return _.sample(possibleRemainingPrizes, 1)
         // }
     },
-    genBlankCubePrizeForWinner: function(cubeNumber){
-        var self = this;
-        if(cubeNumber === 1){
-            return self.winningPrize;
-        }else if(cubeNumber < 6){
-            return _.sample([self.winningPrize] + _.sample(self.prizePool, 1)], 1);
-        }else{
-            return _.sample([self.winningPrize] + _.sample(self.prizePool, self.numberOfTurnsLeft - 1)], 1)
-        }
-    }
+    // genBlankCubePrizeForWinner: function(cubeNumber){
+    //     var self = this;
+    //     if(cubeNumber === 1){
+    //         return self.winningPrize;
+    //     }else if(cubeNumber < 6){
+    //         return _.sample([self.winningPrize] + _.sample(self.prizePool, 1)], 1);
+    //     }else{
+    //         return _.sample([self.winningPrize] + _.sample(self.prizePool, self.numberOfTurnsLeft - 1)], 1)
+    //     }
+    // }
 
 }
 
@@ -267,3 +271,12 @@ CubeView.prototype = {
     drawPrize(prize)
 }
 <div data-direction="left" class="button">left</div>
+
+
+
+
+prizeGenerator - has 4 prizes, gives you one randomly whenever you call #generatePrize
+cubeController - assigns prize to new side
+gameController - checks for running out of turns and matching all 6 cubes
+
+graphical stuff(cubes, turning logic, etc)
