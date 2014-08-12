@@ -1,0 +1,57 @@
+#perspective {
+  -webkit-perspective: 1000px;
+  -webkit-perspective-origin: 80% 300px;
+  padding: 100px 100px 100px 100px;
+}
+
+#cube {
+  position: relative;
+  margin: 0 auto;
+  height: 400px;
+  width: 400px;
+  -webkit-transition: -webkit-transform 1s linear;
+  -webkit-transform-style: preserve-3d;
+}
+
+
+.face {
+  position: absolute;
+  height: 360px;
+  width: 360px;
+  padding: 20px;
+  background-color: rgba(50, 50, 50, .8);
+  border: 1px solid black;
+}
+
+.prize {
+  position: absolute;
+  height: 300px;
+  width: 300px;
+  padding: 30px;
+  /*background-color: red;*/
+}
+
+#cube .one  {
+  -webkit-transform: rotateX(90deg) translateZ(200px);
+}
+
+#cube .two {
+  -webkit-transform: translateZ(200px);
+}
+
+#cube .three {
+  -webkit-transform: rotateY(90deg) translateZ(200px);
+}
+
+#cube .four {
+  -webkit-transform: rotateY(180deg) translateZ(200px);
+}
+
+#cube .five {
+  -webkit-transform: rotateY(-90deg) translateZ(200px);
+}
+
+#cube .six {
+  -webkit-transform: rotateX(-90deg) translateZ(200px) rotate(180deg);
+}
+

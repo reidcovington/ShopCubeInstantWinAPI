@@ -9,7 +9,7 @@ clicking on a cube shows its buttons
 clicking on a button rotates cube in that direction
     if new side has a prize already, do nothing
     else generate new prize, add to side
-        - 2 ways: 
+        - 2 ways:
             . completely random, first time
             . after first, taking into account matches, and repeats
                 two steps for checking:
@@ -28,7 +28,7 @@ GameController.prototype = {
     tell all cubes to deactivate, tell particular cube its active
     statusEval(<current cube>)
         - pulls all other cube side data
-        - sends to prizeManager.generatePrize(<current cube>, <other cube data>)uc
+        - sends to prizeManager.generatePrize(<current cube>, <other cube data>)
         - <current cube>.addPrize(newPrize)
         - this.checkForTotalMatch
     checkForTotalMatch -> pulls all facing sides, compares for total match
@@ -46,7 +46,7 @@ GameView(){
     listen to clicks on cubes for setting active
 }
 GameView.prototype = {
-    tell GameController which cube got clicked 
+    tell GameController which cube got clicked
     updateMoveCount -> lower move counter by 1
 }
 
@@ -93,3 +93,9 @@ CubeView.prototype = {
     drawPrize(prize)
 }
 
+8/7/14:
+prizeGenerator - has 4 prizes, gives you one randomly whenever you call #generatePrize
+cubeController - assigns prize to new side
+gameController - checks for running out of turns and matching all 6 cubes
+
+graphical stuff(cubes, turning logic, etc)
