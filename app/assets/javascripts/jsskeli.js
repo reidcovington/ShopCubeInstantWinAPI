@@ -3,12 +3,13 @@ $(document).ready(function(){
 });
 
     function GameController(){
-        this.cubeControllers = [new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this)];
+        this.cubeControllers = [new CubeController(this)//,
+                                    // new CubeController(this),
+                                    // new CubeController(this),
+                                    // new CubeController(this),
+                                    // new CubeController(this),
+                                    // new CubeController(this)
+                                    ];
         this.gameView = new GameView(this);
         this.prizeManager = new PrizeManager();
         this.totalMoves = 10;
@@ -226,6 +227,7 @@ $(document).ready(function(){
         _setupButtonClickListeners: function(){
             var self = this;
             $('[data-direction]').click(function(e){
+                console.log('clicked');
                 self.delegate.receiveTurnDirection($(this).data('direction'));
             })
         },
@@ -250,6 +252,7 @@ $(document).ready(function(){
             // this.xAngle += parseInt(directions[0]);
             // this.yAngle += parseInt(directions[1]);
             // $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+            // debugger
             this.matrix = rotateCube(this.matrix, rotations[direction]);
             this.assignFaces();
         },
@@ -308,15 +311,16 @@ var rotations = {
 
 function rotateCube(current, direction){
     var result = [];
-    for(var row = 0; row < direction.length; row++){
+    for(var row = 0; row < current.length; row++){
         result[row] = [];
-        for(var column = 0; column < current[0].length; column++){
+        for(var column = 0; column < direction[0].length; column++){
             var sum = 0;
-            for(var i = 0; i < current.length; i++){
-                sum += current[i][column] * direction[row][i];
+            for(var i = 0; i < current[row].length; i++){
+                sum += current[row][i] * direction[i][column];
             }
             result[row].push(sum);
         }
     }
     return result;
 }
+

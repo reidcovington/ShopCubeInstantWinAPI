@@ -31,27 +31,27 @@
   /*background-color: red;*/
 }
 
-#cube .one  {
+#cube .top  {
   -webkit-transform: rotateX(90deg) translateZ(200px);
 }
 
-#cube .two {
+#cube .front {
   -webkit-transform: translateZ(200px);
 }
 
-#cube .three {
+#cube .right {
   -webkit-transform: rotateY(90deg) translateZ(200px);
 }
 
-#cube .four {
+#cube .back {
   -webkit-transform: rotateY(180deg) translateZ(200px);
 }
 
-#cube .five {
+#cube .left {
   -webkit-transform: rotateY(-90deg) translateZ(200px);
 }
 
-#cube .six {
+#cube .bottom    {
   -webkit-transform: rotateX(-90deg) translateZ(200px) rotate(180deg);
 }
 
