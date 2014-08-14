@@ -21,8 +21,8 @@
   padding: 20px;
   background-color: rgba(50, 50, 50, .8);
   border: 1px solid black;
-  -webkit-transition: -webkit-transform 1s linear;
-  -webkit-transform-style: preserve-3d;
+/*  -webkit-transition: -webkit-transform 1s linear;
+  -webkit-transform-style: preserve-3d;*/
 }
 
 .prize {

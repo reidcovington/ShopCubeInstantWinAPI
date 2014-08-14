@@ -292,8 +292,8 @@ $(document).ready(function(){
 
             // this.assignFaces();
             this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
-            // this.animateCubeRotation(direction);
-            this.assignFaces();
+            this.animateCubeRotation(direction);
+            // this.assignFaces();
         },
         createRotatedMatrix: function(current, direction){
             var newMatrix = [];
@@ -310,19 +310,25 @@ $(document).ready(function(){
             return newMatrix;
         },
         animateCubeRotation: function(direction){
-            $('#cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)")
-            this.xAngle = 0;
-            this.yAngle = 0;
+            // this.xAngle = 0;
+            // this.yAngle = 0;
             var directions = direction.split(" ");
-            this.xAngle += parseInt(directions[0]);
-            this.yAngle += parseInt(directions[1]);
+            this.xAngle = parseInt(directions[0]);
+            this.yAngle = parseInt(directions[1]);
+            var self = this;
             $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+
+            setTimeout(function(){
+                $('#cube').css("-webkit-transition", "0")
+                $('#cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
+                self.assignFaces();
+            }, 1000);
+            $('#cube').css("-webkit-transition", "1s linear")
         },
         assignFaces: function(){
             var faces = ["front", "back", "left", "top", "right", "bottom"]
             for(var i = 0; i < this.matrix.length; i++){
                 var direction = faces[this.matrix[i].indexOf(1)];
-                // debugger
                 $('[data-side=' + i + ']').attr("class", "face " + direction)
             }
         }
