@@ -171,7 +171,7 @@ $(document).ready(function(){
     function CubeModel(delegate){
         this.delegate = delegate;
         this.sides = {1: null, 2: null, 3: null, 4: null, 5: null, 6: null};
-        this.facing = 1;
+        this.facing = 2;
         this.prizesSeen = [];
         // matrix data
     };

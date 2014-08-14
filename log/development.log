@@ -3925,3 +3925,150 @@ Started GET "/assets/question-mark.png" for 127.0.0.1 at 2014-08-08 13:37:19 -04
 
 
 Started GET "/assets/ducati.jpg" for 127.0.0.1 at 2014-08-08 13:37:19 -0400
+
+
+Started GET "/games" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GamesController#index as HTML
+  Rendered games/index.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 74ms (Views: 65.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/basscss.css?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/games.css?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/game.css?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/underscore.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/games.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/initialize.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/jsskeli.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/question-mark.png" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/assets/ducati.jpg" for 127.0.0.1 at 2014-08-08 14:29:02 -0400
+
+
+Started GET "/games" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GamesController#index as HTML
+  Rendered games/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 46ms (Views: 38.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/games.css?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/basscss.css?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/game.css?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/underscore.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/games.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:39 -0400
+
+
+Started GET "/assets/initialize.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:40 -0400
+
+
+Started GET "/assets/jsskeli.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:40 -0400
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-08 14:33:40 -0400
+
+
+Started GET "/assets/question-mark.png" for 127.0.0.1 at 2014-08-08 14:33:40 -0400
+
+
+Started GET "/assets/ducati.jpg" for 127.0.0.1 at 2014-08-08 14:33:40 -0400
+
+
+Started GET "/games" for 127.0.0.1 at 2014-08-08 14:36:55 -0400
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by GamesController#index as HTML
+  Rendered games/index.html.erb within layouts/application (1.4ms)
+Completed 200 OK in 90ms (Views: 76.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/game.css?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/basscss.css?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/games.css?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/underscore.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/games.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/initialize.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/jsskeli.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/question-mark.png" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
+
+
+Started GET "/assets/ducati.jpg" for 127.0.0.1 at 2014-08-08 14:36:56 -0400
