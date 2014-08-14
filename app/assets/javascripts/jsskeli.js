@@ -3,12 +3,13 @@ $(document).ready(function(){
 });
 
     function GameController(){
-        this.cubeControllers = [new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this),
-                                    new CubeController(this)];
+        this.cubeControllers = [new CubeController(this)//,
+                                    // new CubeController(this),
+                                    // new CubeController(this),
+                                    // new CubeController(this),
+                                    // new CubeController(this),
+                                    // new CubeController(this)
+                                    ];
         this.gameView = new GameView(this);
         this.prizeManager = new PrizeManager();
         this.totalMoves = 10;
@@ -210,12 +211,23 @@ $(document).ready(function(){
         this.active = false;
         this.xAngle = 0;
         this.yAngle = 0;
+        this.matrix = [
+                //   f, bk, l, t, r, bt
+      /* side 1 */  [ 1, 0, 0, 0, 0, 0 ],
+      /* side 2 */  [ 0, 1, 0, 0, 0, 0 ],
+      /* side 3 */  [ 0, 0, 1, 0, 0, 0 ],
+      /* side 4 */  [ 0, 0, 0, 1, 0, 0 ],
+      /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
+      /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
+];
+        this.assignFaces();
         this._setupButtonClickListeners();
     };
     CubeView.prototype = {
         _setupButtonClickListeners: function(){
             var self = this;
             $('[data-direction]').click(function(e){
+                console.log('clicked');
                 self.delegate.receiveTurnDirection($(this).data('direction'));
             })
         },
@@ -236,13 +248,79 @@ $(document).ready(function(){
             $(".cubeface"+number+"buttons").hide();
         },
         rotate: function(direction){
-            var directions = direction.split(" ");
-            this.xAngle += parseInt(directions[0]);
-            this.yAngle += parseInt(directions[1]);
-            $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+            // var directions = direction.split(" ");
+            // this.xAngle += parseInt(directions[0]);
+            // this.yAngle += parseInt(directions[1]);
+            // $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+            // debugger
+            this.matrix = rotateCube(this.matrix, rotations[direction]);
+            this.assignFaces();
+        },
+        assignFaces: function(){
+            var faces = ["front", "back", "left", "top", "right", "bottom"]
+
+            for(var i = 0; i < this.matrix.length; i++){
+                var direction = faces[this.matrix[i].indexOf(1)];
+                $('[data-side=' + i + ']').attr("class", "face " + direction)
+            }
         }
     };
 
 
+var rotations = {
+    left: [
+                //   f, bk, l, t, r, bt
+      /* side 1 */  [ 0, 0, 1, 0, 0, 0 ],
+      /* side 2 */  [ 0, 0, 0, 0, 1, 0 ],
+      /* side 3 */  [ 0, 1, 0, 0, 0, 0 ],
+      /* side 4 */  [ 0, 0, 0, 1, 0, 0 ],
+      /* side 5 */  [ 1, 0, 0, 0, 0, 0 ],
+      /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
+],
 
+    right: [
+                //   f, bk, l, t, r, bt
+      /* side 1 */  [ 0, 0, 0, 0, 1, 0 ],
+      /* side 2 */  [ 0, 0, 1, 0, 0, 0 ],
+      /* side 3 */  [ 1, 0, 0, 0, 0, 0 ],
+      /* side 4 */  [ 0, 0, 0, 1, 0, 0 ],
+      /* side 5 */  [ 0, 1, 0, 0, 0, 0 ],
+      /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
+],
+
+    up: [
+                //   f, bk, l, t, r, bt
+      /* side 1 */  [ 0, 0, 0, 1, 0, 0 ],
+      /* side 2 */  [ 0, 0, 0, 0, 0, 1 ],
+      /* side 3 */  [ 0, 0, 1, 0, 0, 0 ],
+      /* side 4 */  [ 0, 1, 0, 0, 0, 0 ],
+      /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
+      /* side 6 */  [ 1, 0, 0, 0, 0, 0 ]
+],
+
+    down: [
+                //   f, bk, l, t, r, bt
+      /* side 1 */  [ 0, 0, 0, 0, 0, 1 ],
+      /* side 2 */  [ 0, 0, 0, 1, 0, 0 ],
+      /* side 3 */  [ 0, 0, 1, 0, 0, 0 ],
+      /* side 4 */  [ 1, 0, 0, 0, 0, 0 ],
+      /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
+      /* side 6 */  [ 0, 1, 0, 0, 0, 0 ]
+]
+}
+
+function rotateCube(current, direction){
+    var result = [];
+    for(var row = 0; row < current.length; row++){
+        result[row] = [];
+        for(var column = 0; column < direction[0].length; column++){
+            var sum = 0;
+            for(var i = 0; i < current[row].length; i++){
+                sum += current[row][i] * direction[i][column];
+            }
+            result[row].push(sum);
+        }
+    }
+    return result;
+}
 
