@@ -290,6 +290,7 @@ $(document).ready(function(){
         },
         rotateCube: function(direction){
 
+            // this.assignFaces();
             this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
             // this.animateCubeRotation(direction);
             this.assignFaces();
@@ -309,6 +310,9 @@ $(document).ready(function(){
             return newMatrix;
         },
         animateCubeRotation: function(direction){
+            $('#cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)")
+            this.xAngle = 0;
+            this.yAngle = 0;
             var directions = direction.split(" ");
             this.xAngle += parseInt(directions[0]);
             this.yAngle += parseInt(directions[1]);
@@ -323,7 +327,6 @@ $(document).ready(function(){
             }
         }
     };
-
 
 
 
