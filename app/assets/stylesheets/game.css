@@ -69,3 +69,10 @@
     filter: FlipV FlipH;
 }
 
+.move-counter{
+  height: 50px;
+  width: 50px;
+  border: solid 1px black;
+  border-radius: 10px;
+}
+
