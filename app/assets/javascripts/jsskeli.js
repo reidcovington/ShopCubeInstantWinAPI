@@ -26,31 +26,30 @@ $(document).ready(function(){
             }
         },
         statusEval: function(cubeController){
-            // var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
-            //      facesOfOtherCubes = [],
-            //      currentCubePrizes = cubeController.getAllSidePrizes();
-            // for(var i = 0; i < this.cubeControllers.length; i++){
-            //     if(i != skipCubeIndex){
-            //         facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
-            //         facesOfOtherCubes = facesOfOtherCubes.sort()
-            //         for(var x = 0; x < facesOfOtherCubes.length; x++){
-            //             if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
-            //                 totalMatches += 1
-            //                 if(totalMatches === 6){
-            //                     return this.triggerWin();
-            //                 }else{
-            //                     this.totalMoves -= 1;
-            //                     cubeController.gameView.updateMoveCount(this.totalMatches);
-            //                     if(this.totalMoves === 0){
-            //                         this.triggerLose();
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
-            // cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, totalMatches));
-            // this.checkForTotalMatch();
+            var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
+                 facesOfOtherCubes = [],
+                 currentCubePrizes = cubeController.getAllSidePrizes();
+            for(var i = 0; i < this.cubeControllers.length; i++){
+                if(i != skipCubeIndex){
+                    facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
+                    facesOfOtherCubes = facesOfOtherCubes.sort()
+                    for(var x = 0; x < facesOfOtherCubes.length; x++){
+                        if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
+                            this.totalMatches += 1
+                            if(this.totalMatches === 6){
+                                return this.triggerWin();
+                            }else{
+                                this.totalMoves -= 1;
+                                cubeController.gameView.updateMoveCount(this.totalMatches);
+                                if(this.totalMoves === 0){
+                                    this.triggerLose();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, this.totalMatches));
         },
         triggerWin: function(){
             alert("You've Won!")
@@ -77,11 +76,12 @@ $(document).ready(function(){
 
     function PrizeManager(){
         this.cubesInitiated = 0;
+        this.fetchPrizes();
         this.determinePrizes();
     };
     PrizeManager.prototype = {
         fetchPrizes: function(){
-            this.prizePool = ["10giftcard", "50giftcard", "100giftcard", "500giftcard", "1000giftcard",  "10000giftcard"]
+            this.prizePool = ["/assets/chuck.jpg", "/assets/ducati.jpg", "/assets/ducky.jpg", "/assets/dumbass.jpg", "/assets/whoa.gif",  "/assets/question-mark.png"]
             // $.ajax(stuff);
         },
         determineWinner: function(){
@@ -144,7 +144,6 @@ $(document).ready(function(){
             this.cubeView.markActive(number)
         },
         receiveTurnDirection: function(direction){
-            this.cubeModel.updateSideFacing(direction);
             this.cubeView.rotateCube(direction);
         },
         checkOldFace: function(){
@@ -159,6 +158,10 @@ $(document).ready(function(){
         getFacingPrize: function(){
             return this.cubeModel.fetchFacingPrizes();
         },
+        receiveSideFacing: function(side){
+            this.cubeModel.facing = side;
+            this.cubeModel.updateSideFacing(side)
+        },
         getSideFacing: function(){
             return this.cubeModel.fetchCurrentSide();
         },
@@ -172,7 +175,7 @@ $(document).ready(function(){
     function CubeModel(delegate){
         this.delegate = delegate;
         this.sides = {1: null, 2: null, 3: null, 4: null, 5: null, 6: null};
-        this.facing = 2;
+        this.facing = 0;
         this.prizesSeen = [];
         // matrix data
     };
@@ -319,11 +322,18 @@ $(document).ready(function(){
             $('#cube').css("-webkit-transition", "1s linear")
         },
         assignFaces: function(){
+            var self = this;
             var faces = ["front", "back", "left", "top", "right", "bottom"]
             for(var i = 0; i < this.matrix.length; i++){
                 var direction = faces[this.matrix[i].indexOf(1)];
                 $('[data-side=' + i + ']').attr("class", "face " + direction)
+                if($('[data-side=' + i + ']').hasClass("face front")){
+                    self.delegate.receiveSideFacing(i);
+                }
             }
+        },
+        drawPrize: function(prize, currentSide){
+            $('[data-side=' + currentSide + ']').html('<img src=' + prize + '>')
         }
     };
 
