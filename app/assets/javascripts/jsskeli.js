@@ -27,8 +27,15 @@ $(document).ready(function(){
         },
         statusEval: function(cubeController){
             var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
-                 facesOfOtherCubes = [],
-                 currentCubePrizes = cubeController.getAllSidePrizes();
+                    facesOfOtherCubes = [],
+                    currentCubePrizes = cubeController.getAllSidePrizes();
+            this.totalMoves -= 1;
+            this.gameView.drawMoveCount(this.totalMoves);
+            if(this.totalMatches === 6){
+                this.triggerWin();
+            }else if(this.totalMoves === 0){
+                this.triggerLose();
+            }
             for(var i = 0; i < this.cubeControllers.length; i++){
                 if(i != skipCubeIndex){
                     facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
@@ -37,10 +44,13 @@ $(document).ready(function(){
                         if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
                             this.totalMatches += 1
                             if(this.totalMatches === 6){
+                                // this.totalMoves -= 1;
+                                // this.gameView.drawMoveCount(this.totalMoves);
                                 return this.triggerWin();
                             }else{
-                                this.totalMoves -= 1;
-                                cubeController.gameView.updateMoveCount(this.totalMatches);
+                                // this.totalMoves -= 1;
+                                // this.gameView.drawMoveCount(this.totalMoves);
+                                // cubeController.gameView.updateMoveCount(this.totalMatches);
                                 if(this.totalMoves === 0){
                                     this.triggerLose();
                                 }
@@ -50,6 +60,15 @@ $(document).ready(function(){
                 }
             }
             cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, this.totalMatches));
+        },
+        checkForGameOutcome: function(){
+            this.totalMoves -= 1;
+            this.gameView.drawMoveCount(this.totalMoves);
+            if(this.totalMatches === 6){
+                this.triggerWin();
+            }else if(this.totalMoves === 0){
+                this.triggerLose();
+            }
         },
         triggerWin: function(){
             alert("You've Won!")
@@ -71,6 +90,9 @@ $(document).ready(function(){
             $('.cubeface').click(function(e){
                 self.delegate.updateActiveCube(this.indexOf())
             })
+        },
+        drawMoveCount: function(moves){
+            $('[data-moves]').html(moves)
         }
     };
 
@@ -147,7 +169,7 @@ $(document).ready(function(){
             this.cubeView.rotateCube(direction);
         },
         checkOldFace: function(){
-            this.delegate.checkForTotalMatch();
+            this.delegate.checkForGameOutcome();
         },
         fillNewFace: function(){
             this.delegate.statusEval(this);
