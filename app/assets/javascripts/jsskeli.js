@@ -231,8 +231,8 @@ $(document).ready(function(){
       /* side 5 */  [ 1, 0, 0, 0, 0, 0 ],
       /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
         ],
-        // right:
-        "0 90": [
+            // right:
+            "0 90": [
                 //   f, bk, l, t, r, bt
       /* side 1 */  [ 0, 0, 0, 0, 1, 0 ],
       /* side 2 */  [ 0, 0, 1, 0, 0, 0 ],
@@ -241,8 +241,8 @@ $(document).ready(function(){
       /* side 5 */  [ 0, 1, 0, 0, 0, 0 ],
       /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
         ],
-        // up:
-         "90 0": [
+            // up:
+            "90 0": [
                 //   f, bk, l, t, r, bt
       /* side 1 */  [ 0, 0, 0, 1, 0, 0 ],
       /* side 2 */  [ 0, 0, 0, 0, 0, 1 ],
@@ -251,8 +251,8 @@ $(document).ready(function(){
       /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
       /* side 6 */  [ 1, 0, 0, 0, 0, 0 ]
         ],
-        // down:
-        "-90 0": [
+            // down:
+            "-90 0": [
                 //   f, bk, l, t, r, bt
       /* side 1 */  [ 0, 0, 0, 0, 0, 1 ],
       /* side 2 */  [ 0, 0, 0, 1, 0, 0 ],
@@ -262,7 +262,6 @@ $(document).ready(function(){
       /* side 6 */  [ 0, 1, 0, 0, 0, 0 ]
         ]
     };
-        // this.assignFaces();
         this._setupButtonClickListeners();
     };
     CubeView.prototype = {
@@ -289,11 +288,8 @@ $(document).ready(function(){
             $(".cubeface"+number+"buttons").hide();
         },
         rotateCube: function(direction){
-
-            // this.assignFaces();
             this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
             this.animateCubeRotation(direction);
-            // this.assignFaces();
         },
         createRotatedMatrix: function(current, direction){
             var newMatrix = [];
@@ -310,14 +306,11 @@ $(document).ready(function(){
             return newMatrix;
         },
         animateCubeRotation: function(direction){
-            // this.xAngle = 0;
-            // this.yAngle = 0;
             var directions = direction.split(" ");
             this.xAngle = parseInt(directions[0]);
             this.yAngle = parseInt(directions[1]);
             var self = this;
             $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
-
             setTimeout(function(){
                 $('#cube').css("-webkit-transition", "0")
                 $('#cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
