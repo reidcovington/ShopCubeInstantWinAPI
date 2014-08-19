@@ -104,7 +104,7 @@ $(document).ready(function(){
     };
     PrizeManager.prototype = {
         fetchPrizes: function(){
-            this.potentialPrizePool = ["/assets/chuck.jpg", "/assets/ducati.jpg", "/assets/ducky.jpg", "/assets/dumbass.jpg", "/assets/whoa.gif",  "/assets/question-mark.png"]
+            this.potentialPrizePool = ["/assets/LAMBO.jpg", "/assets/ducati.jpg", "/assets/cash.jpg", "/assets/handbag.jpg", "/assets/ring.jpg",  "/assets/Bora.jpg"]
             // $.ajax(stuff);
         },
         determineWinner: function(){
@@ -128,18 +128,19 @@ $(document).ready(function(){
             }
         },
         generatePrize: function(currentCubePrizes, facesOfOtherCubes, totalMatches){
-            var possibleRemainingPrizes = this.prizePool;
+            this.possibleRemainingPrizes = this.prizePool;
+            var prizeCounter = 0
             for(i = 0; i < currentCubePrizes.length; i++){
                 var indexOfUsedPrize = this.prizePool.indexOf(currentCubePrizes[i])
                 if(indexOfUsedPrize != -1) {
-                    possibleRemainingPrizes.splice(i, 1);
+                    this.possibleRemainingPrizes.splice(i, 1);
                 }
             }
-            var possibleRemainingReducedPrizes = this.reducedPrizePool;
+            this.possibleRemainingReducedPrizes = this.reducedPrizePool;
             for(i = 0; i < currentCubePrizes.length; i++){
                 var indexOfUsedPrize = this.reducedPrizePool.indexOf(currentCubePrizes[i])
                 if(indexOfUsedPrize != -1) {
-                    possibleRemainingReducedPrizes.splice(i, 1);
+                    this.possibleRemainingReducedPrizes.splice(i, 1);
                 }
             }
             debugger
@@ -154,22 +155,23 @@ $(document).ready(function(){
                     return _.sample(this.reducedPrizePool)
                 }
             }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
-                if(currentCubePrizes != this.reducedPrizePool){
-                    return _.sample(possibleRemainingReducedPrizes)
-                }else{
-                    return _.sample(possibleRemainingPrizes)
-                }
+                // debugger
+                // if(currentCubePrizes != this.reducedPrizePool){
+                //     return _.sample(this.possibleRemainingReducedPrizes)
+                // }else{
+                    return _.sample(this.possibleRemainingPrizes)
+                // }
             }else if(totalMatches < 5){
                 if(currentCubePrizes != this.reducedPrizePool){
-                    return _.sample(possibleRemainingReducedPrizes)
+                    return _.sample(this.possibleRemainingReducedPrizes)
                 }else{
-                    return _.sample(possibleRemainingPrizes)
+                    return _.sample(this.possibleRemainingPrizes)
                 }
             }else{
                 if(this.winningPrize){
                     return facesOfOtherCubes[0]
                 }else{
-                    return _.sample((_.without(possibleRemainingPrizes, facesOfOtherCubes[0])))
+                    return _.sample((_.without(this.possibleRemainingPrizes, facesOfOtherCubes[0])))
                 }
             }
         }
