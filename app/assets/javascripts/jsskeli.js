@@ -99,55 +99,77 @@ $(document).ready(function(){
     function PrizeManager(){
         this.cubesInitiated = 0;
         this.fetchPrizes();
+        this.winner = this.determineWinner();
         this.determinePrizes();
     };
     PrizeManager.prototype = {
         fetchPrizes: function(){
-            this.prizePool = ["/assets/chuck.jpg", "/assets/ducati.jpg", "/assets/ducky.jpg", "/assets/dumbass.jpg", "/assets/whoa.gif",  "/assets/question-mark.png"]
+            this.potentialPrizePool = ["/assets/chuck.jpg", "/assets/ducati.jpg", "/assets/ducky.jpg", "/assets/dumbass.jpg", "/assets/whoa.gif",  "/assets/question-mark.png"]
             // $.ajax(stuff);
         },
         determineWinner: function(){
-            return _.sample(["win", "lose"], 1)
+            return _.sample([true, false])
         },
         determinePrizes: function(){
-            if (this.determineWinner === "win"){
-                this.winningPrize =  _.sample(prizePool, 1);
-                this.prizePool =  [this.winningPrize] + _.sample((_.without(this.prizePool, this.winningPrize)), 5);
-                this.reducedPrizePool = [this.winningPrize] + _.sample(this.prizePool, 2);
+            this.prizePool = [];
+            this.reducedPrizePool = []
+            if (this.winner === true){
+                this.winningPrize =  _.sample(this.potentialPrizePool);
+                this.prizePool.push(this.winningPrize)
+                this.prizePool.push(_.sample((_.without(this.potentialPrizePool, this.winningPrize)), 5));
+                this.prizePool = _.flatten(this.prizePool);
+                this.reducedPrizePool.push(this.winningPrize)
+                this.reducedPrizePool.push(_.sample((_.without(this.potentialPrizePool, this.winningPrize)), 2));
+                this.reducedPrizePool = _.flatten(this.reducedPrizePool);
             }else{
-            this.winningPrize = null;
-            this.prizePool =  _.sample(this.prizePool, 6);
-            this.reducedPrizePool = _.sample(this.prizePool, 3);
+                this.winningPrize = null;
+                this.prizePool =  _.sample(this.potentialPrizePool, 6);
+                this.reducedPrizePool = _.sample(this.potentialPrizePool, 3);
             }
         },
         generatePrize: function(currentCubePrizes, facesOfOtherCubes, totalMatches){
-            var possibleRemainingPrizes = _.without(this.prizePool, currentCubePrizes),
-                  possibleRemainingReducedPrizes = _.without(this.reducedPrizePool, currentCubePrizes)
+            var possibleRemainingPrizes = this.prizePool;
+            for(i = 0; i < currentCubePrizes.length; i++){
+                var indexOfUsedPrize = this.prizePool.indexOf(currentCubePrizes[i])
+                if(indexOfUsedPrize != -1) {
+                    possibleRemainingPrizes.splice(i, 1);
+                }
+            }
+            var possibleRemainingReducedPrizes = this.reducedPrizePool;
+            for(i = 0; i < currentCubePrizes.length; i++){
+                var indexOfUsedPrize = this.reducedPrizePool.indexOf(currentCubePrizes[i])
+                if(indexOfUsedPrize != -1) {
+                    possibleRemainingReducedPrizes.splice(i, 1);
+                }
+            }
+            debugger
             if(this.cubesInitiated === 0){
                 if(this.winningPrize){
                     this.cubesInitiated += 1;
+                    console.log(this.winningPrize)
                     return this.winningPrize
                 }else{
                     this.cubesInitiated += 1;
-                    return _.sample(this.reducedPrizePool, 1)
+                    console.log("not a winning prize")
+                    return _.sample(this.reducedPrizePool)
                 }
             }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
                 if(currentCubePrizes != this.reducedPrizePool){
-                    return _.sample(possibleRemainingReducedPrizes, 1)
+                    return _.sample(possibleRemainingReducedPrizes)
                 }else{
-                    return _.sample(possibleRemainingPrizes, 1)
+                    return _.sample(possibleRemainingPrizes)
                 }
             }else if(totalMatches < 5){
                 if(currentCubePrizes != this.reducedPrizePool){
-                    return _.sample(possibleRemainingReducedPrizes, 1)
+                    return _.sample(possibleRemainingReducedPrizes)
                 }else{
-                    return _.sample(possibleRemainingPrizes, 1)
+                    return _.sample(possibleRemainingPrizes)
                 }
             }else{
                 if(this.winningPrize){
                     return facesOfOtherCubes[0]
                 }else{
-                    return _.sample((_.without(possibleRemainingPrizes, facesOfOtherCubes[0])) , 1)
+                    return _.sample((_.without(possibleRemainingPrizes, facesOfOtherCubes[0])))
                 }
             }
         }
@@ -212,7 +234,7 @@ $(document).ready(function(){
         },
         fetchAllSidePrizes: function(){
             var allSides = [];
-            for(i = 0; i < this.sides.length; i++){
+            for(i = 1; i < 6; i++){
                 if(this.sides[i]){
                     allSides.push(this.sides[i])
                 }
@@ -227,7 +249,6 @@ $(document).ready(function(){
         },
         assignPrize: function(prize){
             this.sides[this.facing] = prize;
-
         }
     };
 
