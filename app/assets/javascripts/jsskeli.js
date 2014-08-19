@@ -26,40 +26,36 @@ $(document).ready(function(){
             }
         },
         statusEval: function(cubeController){
-            var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
-                    facesOfOtherCubes = [],
-                    currentCubePrizes = cubeController.getAllSidePrizes();
-            this.totalMoves -= 1;
-            this.gameView.drawMoveCount(this.totalMoves);
-            if(this.totalMatches === 6){
-                this.triggerWin();
-            }else if(this.totalMoves === 0){
-                this.triggerLose();
-            }
-            for(var i = 0; i < this.cubeControllers.length; i++){
-                if(i != skipCubeIndex){
-                    facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
-                    facesOfOtherCubes = facesOfOtherCubes.sort()
-                    for(var x = 0; x < facesOfOtherCubes.length; x++){
-                        if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
-                            this.totalMatches += 1
-                            if(this.totalMatches === 6){
-                                // this.totalMoves -= 1;
-                                // this.gameView.drawMoveCount(this.totalMoves);
-                                return this.triggerWin();
-                            }else{
-                                // this.totalMoves -= 1;
-                                // this.gameView.drawMoveCount(this.totalMoves);
-                                // cubeController.gameView.updateMoveCount(this.totalMatches);
-                                if(this.totalMoves === 0){
-                                    this.triggerLose();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, this.totalMatches));
+            // var skipCubeIndex = this.cubeControllers.indexOf(cubeController), //current cube index
+            //         facesOfOtherCubes = [],
+            var currentCubePrizes = cubeController.getAllSidePrizes(); //array of current cube prizes
+            // this.totalMoves -= 1; // BEGIN REPEAT OF checkForGameOutcome //
+            // this.gameView.drawMoveCount(this.totalMoves);
+            // if(this.totalMatches === 6){
+            //     this.triggerWin();
+            // }else if(this.totalMoves === 0){
+            //     this.triggerLose();
+            // } // END REPEAT OF checkForGameOutcome //
+            // for(var i = 0; i < this.cubeControllers.length; i++){
+            //     if(i != skipCubeIndex){
+            //         facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
+            //         facesOfOtherCubes = facesOfOtherCubes.sort()
+            //         for(var x = 0; x < facesOfOtherCubes.length; x++){
+            //             if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
+            //                 this.totalMatches += 1
+            //                 if(this.totalMatches === 6){
+            //                     return this.triggerWin();
+            //                 }else{
+            //                     if(this.totalMoves === 0){
+            //                         this.triggerLose();
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes));//, facesOfOtherCubes, this.totalMatches));
+            this.checkForGameOutcome();
         },
         checkForGameOutcome: function(){
             this.totalMoves -= 1;
@@ -127,53 +123,56 @@ $(document).ready(function(){
                 this.reducedPrizePool = _.sample(this.potentialPrizePool, 3);
             }
         },
-        generatePrize: function(currentCubePrizes, facesOfOtherCubes, totalMatches){
-            this.possibleRemainingPrizes = this.prizePool;
-            var prizeCounter = 0
-            for(i = 0; i < currentCubePrizes.length; i++){
-                var indexOfUsedPrize = this.prizePool.indexOf(currentCubePrizes[i])
-                if(indexOfUsedPrize != -1) {
-                    this.possibleRemainingPrizes.splice(i, 1);
-                }
-            }
-            this.possibleRemainingReducedPrizes = this.reducedPrizePool;
-            for(i = 0; i < currentCubePrizes.length; i++){
-                var indexOfUsedPrize = this.reducedPrizePool.indexOf(currentCubePrizes[i])
-                if(indexOfUsedPrize != -1) {
-                    this.possibleRemainingReducedPrizes.splice(i, 1);
-                }
-            }
-            debugger
-            if(this.cubesInitiated === 0){
-                if(this.winningPrize){
-                    this.cubesInitiated += 1;
-                    console.log(this.winningPrize)
-                    return this.winningPrize
-                }else{
-                    this.cubesInitiated += 1;
-                    console.log("not a winning prize")
-                    return _.sample(this.reducedPrizePool)
-                }
-            }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
-                // debugger
-                // if(currentCubePrizes != this.reducedPrizePool){
-                //     return _.sample(this.possibleRemainingReducedPrizes)
-                // }else{
-                    return _.sample(this.possibleRemainingPrizes)
-                // }
-            }else if(totalMatches < 5){
-                if(currentCubePrizes != this.reducedPrizePool){
-                    return _.sample(this.possibleRemainingReducedPrizes)
-                }else{
-                    return _.sample(this.possibleRemainingPrizes)
-                }
-            }else{
-                if(this.winningPrize){
-                    return facesOfOtherCubes[0]
-                }else{
-                    return _.sample((_.without(this.possibleRemainingPrizes, facesOfOtherCubes[0])))
-                }
-            }
+        generatePrize: function(currentCubePrizes){//, facesOfOtherCubes, totalMatches){
+            // this.possibleRemainingPrizes = this.prizePool;
+            // var prizeCounter = 0
+            // for(i = 0; i < currentCubePrizes.length; i++){
+            //     var indexOfUsedPrize = this.prizePool.indexOf(currentCubePrizes[i])
+            //     if(indexOfUsedPrize != -1) {
+            //         this.possibleRemainingPrizes.splice(indexOfUsedPrize, 1);
+            //     }
+            // }
+            // this.possibleRemainingReducedPrizes = this.reducedPrizePool;
+            // for(i = 0; i < currentCubePrizes.length; i++){
+            //     var indexOfUsedPrize = this.reducedPrizePool.indexOf(currentCubePrizes[i])
+            //     if(indexOfUsedPrize != -1) {
+            //         this.possibleRemainingReducedPrizes.splice(i, 1);
+            //     }
+            // }
+            // debugger
+            // if(this.cubesInitiated === 0){
+            //     if(this.winningPrize){
+            //         this.cubesInitiated += 1;
+            //         console.log(this.winningPrize)
+            //         return this.winningPrize
+            //     }else{
+            //         this.cubesInitiated += 1;
+            //         console.log("not a winning prize")
+            //         return _.sample(this.reducedPrizePool)
+            //     }
+            // }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
+            //     // debugger
+            //     // if(currentCubePrizes != this.reducedPrizePool){
+            //     //     return _.sample(this.possibleRemainingReducedPrizes)
+            //     // }else{
+            //         return _.sample(this.possibleRemainingPrizes)
+            //     // }
+            // }else if(totalMatches < 5){
+            //     if(currentCubePrizes != this.reducedPrizePool){
+            //         return _.sample(this.possibleRemainingReducedPrizes)
+            //     }else{
+            //         return _.sample(this.possibleRemainingPrizes)
+            //     }
+            // }else{
+            //     if(this.winningPrize){
+            //         return facesOfOtherCubes[0]
+            //     }else{
+            //         return _.sample((_.without(this.possibleRemainingPrizes, facesOfOtherCubes[0])))
+            //     }
+            // }
+            var limitedPrizePool = _.difference(this.prizePool, currentCubePrizes);
+            // console.log(limitedPrizePool)
+            return _.sample(limitedPrizePool);
         }
     };
 
@@ -369,11 +368,11 @@ $(document).ready(function(){
         assignFaces: function(){
             var self = this;
             var faces = ["front", "back", "left", "top", "right", "bottom"]
-            for(var i = 0; i < this.matrix.length; i++){
-                var direction = faces[this.matrix[i].indexOf(1)];
-                $('[data-side=' + i + ']').attr("class", "face " + direction)
-                if($('[data-side=' + i + ']').hasClass("face front")){
-                    self.delegate.receiveSideFacing(i);
+            for(var sideIndex = 0; sideIndex < this.matrix.length; sideIndex++){
+                var direction = faces[this.matrix[sideIndex].indexOf(1)];
+                $('[data-side=' + sideIndex + ']').attr("class", "face " + direction)
+                if(direction === "front"){
+                    self.delegate.receiveSideFacing(sideIndex);
                 }
             }
         },
