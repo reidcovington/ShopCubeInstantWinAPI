@@ -57,3 +57,15 @@
   -webkit-transform: rotateX(-90deg) translateZ(200px) rotate(180deg);
 }
 
+#cube img {
+    margin: auto;
+}
+
+.bottom img {
+    -moz-transform: scaleY(-1) scaleX(-1);
+    -o-transform: scaleY(-1) scaleX(-1);
+    -webkit-transform: scaleY(-1) scaleX(-1);
+    transform: scaleY(-1) scaleX(-1);
+    filter: FlipV FlipH;
+}
+
