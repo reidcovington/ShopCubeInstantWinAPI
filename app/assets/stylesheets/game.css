@@ -1,147 +1,70 @@
-/*#perspective {
-  -webkit-perspective: 1000px;
-  -webkit-perspective-origin: 80% 300px;
-  padding: 100px 100px 100px 100px;
-}
-
-#cube {
-  position: relative;
-  margin: 0 auto;
-  height: 400px;
-  width: 400px;
-  -webkit-transition: -webkit-transform 1s linear;
-  -webkit-transform-style: preserve-3d;
-}
-
-
-.face {
-  position: absolute;
-  height: 360px;
-  width: 360px;
-  padding: 20px;
-  background-color: rgba(50, 50, 50, .8);
-  border: 1px solid black;
-/*  -webkit-transition: -webkit-transform 1s linear;
-  -webkit-transform-style: preserve-3d;
-}
-
-.prize {
-  position: absolute;
-  height: 300px;
-  width: 300px;
-  padding: 30px;
-  /*background-color: red;
-}
-
-#cube .top  {
-  -webkit-transform: rotateX(90deg) translateZ(200px);
-}
-
-#cube .front {
-  -webkit-transform: translateZ(200px);
-}
-
-#cube .right {
-  -webkit-transform: rotateY(90deg) translateZ(200px);
-}
-
-#cube .back {
-  -webkit-transform: rotateY(180deg) translateZ(200px);
-}
-
-#cube .left {
-  -webkit-transform: rotateY(-90deg) translateZ(200px);
-}
-
-#cube .bottom    {
-  -webkit-transform: rotateX(-90deg) translateZ(200px) rotate(180deg);
-}
-
-#cube img {
-    margin: auto;
-}
-
-.bottom img {
-    -moz-transform: scaleY(-1) scaleX(-1);
-    -o-transform: scaleY(-1) scaleX(-1);
-    -webkit-transform: scaleY(-1) scaleX(-1);
-    transform: scaleY(-1) scaleX(-1);
-    filter: FlipV FlipH;
-}
-
-*/
 .move-counter{
-  height: 50px;
-  width: 50px;
-  border: solid 1px black;
-  border-radius: 10px;
+    height: 2.5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(100, 225, 100, 1);
+    text-align: center;
+    width: 15rem;
+    margin: .3rem auto 0;
+    border-radius: 5px;
+    line-height: 2.3rem;
+    font-size: 2rem;
+    padding: .1rem;
 }
-
-
+.game-container {
+    background-color: rgba(200, 255, 200, .5);
+    max-height: 600px;
+    max-width: 600px;
+    margin: 2rem auto;
+    border: 2px solid rgba(170, 255, 170, .5);
+    border-radius: 1rem;
+    padding: .7rem 0rem;
+}
 .perspective {
-  width: 200px;
-  height: 200px;
-  position: relative;
-  perspective: 1000px;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    perspective: 1000px;
 }
-
 .cube {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
 }
-
 .cube .face {
-  width: 196px;
-  height: 196px;
-  display: block;
-  position: absolute;
-  border: 2px solid #000;
-  background-color: rgba(55, 155, 125, 1);
-  border-radius: 30px;
-  /*backface-visibility: hidden;*/
+    width: 142px;
+    height: 142px;
+    display: block;
+    position: absolute;
+    border: 4px solid rgba(0, 55, 100, 1);
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 20px;
+    transition: background-color .15s linear, border-color .15s linear;
 }
-
-.cube .front  { transform: rotateY(   0deg ) translateZ( 100px ); }
-.cube .back   { transform: rotateX( 180deg ) translateZ( 100px ); }
-.cube .right  { transform: rotateY(  90deg ) translateZ( 100px ); }
-.cube .left   { transform: rotateY( -90deg ) translateZ( 100px ); }
-.cube .top    { transform: rotateX(  90deg ) translateZ( 100px ); }
-.cube .bottom { transform: rotateX( -90deg ) translateZ( 100px ); }
-
+.cube .front  { transform: rotateY(   0deg ) translateZ( 75px ); }
+.cube .back   { transform: rotateX( 180deg ) translateZ( 75px ); }
+.cube .right  { transform: rotateY(  90deg ) translateZ( 75px ); }
+.cube .left   { transform: rotateY( -90deg ) translateZ( 75px ); }
+.cube .top    { transform: rotateX(  90deg ) translateZ( 75px ); }
+.cube .bottom { transform: rotateX( -90deg ) translateZ( 75px ); }
 .cube { transition: transform 3s linear; }
-
 img {
-    max-height: 176px;
-    max-width: 176px;
+    max-height: 122px;
+    max-width: 122px;
     padding: 10px;
-    border-radius: 28px;
-    /*background-color: #000;*/
+    border-radius: 17px;
 }
 .cube-holder {
     display: inline-block;
-    margin: 40px;
+    margin: 20px;
 }
 .cube-row {
     display: inline-block;
 }
-.buttons .button {
+.buttons {
     position: relative;
 }
-.button.top {
-    top: 0;
-    right: 50%;
-}
-.button.bottom {
-    bottom: 0;
-    right: 50%;
-}
-.button.left {
-    top: 50%;
-    left: 0;
-}
-.button.right {
-    top: 50%;
-    right: 0;
+.buttons .button {
+    position: relative;
 }
