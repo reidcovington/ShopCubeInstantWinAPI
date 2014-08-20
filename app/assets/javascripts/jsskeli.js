@@ -3,17 +3,18 @@ $(document).ready(function(){
 });
 
     function GameController(){
-        this.cubeControllers = [new CubeController(this)//,
-                                    // new CubeController(this),
-                                    // new CubeController(this),
-                                    // new CubeController(this),
-                                    // new CubeController(this),
-                                    // new CubeController(this)
+        this.cubeControllers = [new CubeController(this, 0),
+                                new CubeController(this, 1),
+                                new CubeController(this, 2),
+                                new CubeController(this, 3),
+                                new CubeController(this, 4),
+                                new CubeController(this, 5)
                                     ];
         this.gameView = new GameView(this);
         this.prizeManager = new PrizeManager();
-        this.totalMoves = 10;
+        this.totalMoves = 100;
         this.totalMatches = 0;
+        this.updateActiveCube(0);
     };
     GameController.prototype = {
         updateActiveCube: function(number){
@@ -33,11 +34,30 @@ $(document).ready(function(){
         checkForGameOutcome: function(){
             this.totalMoves -= 1;
             this.gameView.drawMoveCount(this.totalMoves);
-            if(this.totalMatches === 6){
+            var totalMatch = this.calcMatches();
+            console.log(totalMatch);
+            if(totalMatch){
                 this.triggerWin();
             }else if(this.totalMoves === 0){
                 this.triggerLose();
             }
+        },
+        calcMatches: function(){
+            var currentFaces = this.fetchAllFacingPrizes();
+            console.log(currentFaces)
+            if(_.uniq(currentFaces).length === 1){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        fetchAllFacingPrizes: function(){
+            var facing = [];
+            for(var i = 0; i < this.cubeControllers.length; i++){
+                var cubeController = this.cubeControllers[i];
+                facing.push(cubeController.getFacingPrize());
+            }
+            return facing;
         },
         triggerWin: function(){
             alert("You've Won!")
@@ -58,7 +78,7 @@ $(document).ready(function(){
             var self = this;
             $("[data-cube]").click(function(e){
                 // self.delegate.updateActiveCube(this.indexOf())
-                console.log(this)
+                self.delegate.updateActiveCube($(this).data("cube"));
             })
         },
         drawMoveCount: function(moves){
@@ -103,20 +123,25 @@ $(document).ready(function(){
         }
     };
 
-    function CubeController(delegate){
+    function CubeController(delegate, cubeNumber){
         this.delegate = delegate;
+        this.cubeNumber = cubeNumber;
         this.cubeModel = new CubeModel(this);
-        this.cubeView = new CubeView(this);
+        this.cubeView = new CubeView(this, cubeNumber);
+        this.activeCube = false;
     };
     CubeController.prototype = {
         markInactive: function(number){
-            this.cubeView.markInactive(number)
+            // this.cubeView.markInactive(number)
+            this.activeCube = false;
         },
         markActive: function(number){
-            this.cubeView.markActive(number)
+            // this.cubeView.markActive(number)
+            this.activeCube = true;
         },
         receiveTurnDirection: function(direction){
-            this.cubeView.rotateCube(direction);
+            console.log(this.delegate.cubeControllers.indexOf(this) + ": " + this.activeCube);
+            if(this.activeCube) this.cubeView.rotateCube(direction);
         },
         checkOldFace: function(){
             this.delegate.checkForGameOutcome();
@@ -128,7 +153,7 @@ $(document).ready(function(){
             return this.cubeModel.fetchAllSidePrizes();
         },
         getFacingPrize: function(){
-            return this.cubeModel.fetchFacingPrizes();
+            return this.cubeModel.fetchFacingPrize();
         },
         receiveSideFacing: function(side){
             this.cubeModel.facing = side;
@@ -167,7 +192,7 @@ $(document).ready(function(){
             }
             return allSides;
         },
-        fetchFacingPrizes: function(){
+        fetchFacingPrize: function(){
             return this.sides[this.facing];
         },
         fetchCurrentSide: function(){
@@ -178,9 +203,10 @@ $(document).ready(function(){
         }
     };
 
-    function CubeView(delegate){
+    function CubeView(delegate, cubeNumber){
         this.delegate = delegate;
-        this.active = false;
+        // this.active = false;
+        this.cube = "[data-cube='" + cubeNumber + "'] .cube"
         this.xAngle = 0;
         this.yAngle = 0;
         this.matrix = [
@@ -243,22 +269,22 @@ $(document).ready(function(){
                 self.delegate.receiveTurnDirection($(this).data('direction'));
             })
         },
-        markInactive: function(number){
-            this.active = true;
-            this.hideButtons(number);
-            $(".cubeface"+number).removeClass("active");
-        },
-        markActive: function(number){
-            this.active = true;
-            this.showButtons(number);
-            $(".cubeface"+number).addClass("active");
-        },
-        showButtons: function(number){
-            $(".cubeface"+number+"buttons").show();
-        },
-        hideButtons: function(number){
-            $(".cubeface"+number+"buttons").hide();
-        },
+        // markInactive: function(number){
+        //     this.active = true;
+        //     this.hideButtons(number);
+        //     $(".cubeface"+number).removeClass("active");
+        // },
+        // markActive: function(number){
+        //     this.active = true;
+        //     this.showButtons(number);
+        //     $(".cubeface"+number).addClass("active");
+        // },
+        // showButtons: function(number){
+        //     $(".cubeface"+number+"buttons").show();
+        // },
+        // hideButtons: function(number){
+        //     $(".cubeface"+number+"buttons").hide();
+        // },
         rotateCube: function(direction){
             this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
             this.animateCubeRotation(direction);
@@ -277,33 +303,34 @@ $(document).ready(function(){
             }
             return newMatrix;
         },
-        animateCubeRotation: function(direction, cubeNumber){
-            var activeCube = "[data-cube='" + cubeNumber + "'] .cube" //finish this
+        animateCubeRotation: function(direction){
+            // var activeCube = "[data-cube='" + cubeNumber + "'] .cube" //finish this
             var directions = direction.split(" ");
             this.xAngle = parseInt(directions[0]);
             this.yAngle = parseInt(directions[1]);
             var self = this;
-            $('.cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+            $(self.cube).css("-webkitTransform", "rotateX("+self.xAngle+"deg) rotateY("+self.yAngle+"deg)");
             setTimeout(function(){
-                $('.cube').css("-webkit-transition", "0")
-                $('.cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
+                $(self.cube).css("-webkit-transition", "0")
+                $(self.cube).css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
                 self.assignFaces();
             }, 500);
-            $('.cube').css("-webkit-transition", "transform .5s ease-in-out")
+            $(self.cube).css("-webkit-transition", "transform .5s ease-in-out")
         },
         assignFaces: function(){
             var self = this;
             var faces = ["front", "back", "left", "top", "right", "bottom"]
             for(var sideIndex = 0; sideIndex < this.matrix.length; sideIndex++){
                 var direction = faces[this.matrix[sideIndex].indexOf(1)];
-                $('[data-side=' + sideIndex + ']').attr("class", "face " + direction)
+                $(this.cube + ' [data-side=' + sideIndex + ']').attr("class", "face " + direction)
                 if(direction === "front"){
                     self.delegate.receiveSideFacing(sideIndex);
                 }
             }
         },
         drawPrize: function(prize, currentSide){
-            $('[data-side=' + currentSide + ']').html('<img src=' + prize + '>')
+            // console.log(this.cube + )
+            $(this.cube + ' [data-side=' + currentSide + ']').html('<img src=' + prize + '>')
         }
     };
 

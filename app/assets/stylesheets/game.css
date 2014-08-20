@@ -110,8 +110,8 @@
 .cube { transition: transform .5s linear; }
 
 img {
-    max-height: 196px;
-    max-width: 196px;
+    max-height: 96px;
+    max-width: 96px;
 }
 .cube-holder {
     display: inline-block;
