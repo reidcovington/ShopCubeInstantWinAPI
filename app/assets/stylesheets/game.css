@@ -98,7 +98,7 @@
   display: block;
   position: absolute;
   border: 2px solid #000;
-  background-color: rgba(55, 155, 125, 1);
+  background-color: rgba(55, 155, 125, .95);
   border-radius: 30px;
   /*backface-visibility: hidden;*/
 }
@@ -113,9 +113,9 @@
 .cube { transition: transform 3s linear; }
 
 img {
-    max-height: 176px;
-    max-width: 176px;
-    padding: 10px;
+    max-height: 156px;
+    max-width: 156px;
+    padding: 20px;
     border-radius: 28px;
     /*background-color: #000;*/
 }
@@ -125,6 +125,9 @@ img {
 }
 .cube-row {
     display: inline-block;
+}
+.buttons {
+    position: relative;
 }
 .buttons .button {
     position: relative;
@@ -143,5 +146,12 @@ img {
 }
 .button.right {
     top: 50%;
+    right: 0;
+}
+.button-cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
     right: 0;
 }

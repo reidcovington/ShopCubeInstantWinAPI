@@ -35,7 +35,7 @@ $(document).ready(function(){
             this.totalMoves -= 1;
             this.gameView.drawMoveCount(this.totalMoves);
             var totalMatch = this.calcMatches();
-            console.log(totalMatch);
+            // console.log(totalMatch);
             if(totalMatch){
                 this.triggerWin();
             }else if(this.totalMoves === 0){
@@ -44,7 +44,7 @@ $(document).ready(function(){
         },
         calcMatches: function(){
             var currentFaces = this.fetchAllFacingPrizes();
-            console.log(currentFaces)
+            // console.log(currentFaces)
             if(_.uniq(currentFaces).length === 1){
                 return true;
             }else{
@@ -94,7 +94,7 @@ $(document).ready(function(){
     };
     PrizeManager.prototype = {
         fetchPrizes: function(){
-            this.potentialPrizePool = ["/assets/LAMBO.jpg", "/assets/ducati.jpg", "/assets/cash.jpg", "/assets/handbag.jpg", "/assets/ring.jpg",  "/assets/Bora.jpg"]
+            this.potentialPrizePool = ["/assets/car.png", "/assets/cash.png", "/assets/vacation.png", "/assets/ring.png", "/assets/house.png",  "/assets/shopping.png"]
             // $.ajax(stuff);
         },
         determineWinner: function(){
@@ -140,7 +140,7 @@ $(document).ready(function(){
             this.activeCube = true;
         },
         receiveTurnDirection: function(direction){
-            console.log(this.delegate.cubeControllers.indexOf(this) + ": " + this.activeCube);
+            // console.log(this.delegate.cubeControllers.indexOf(this) + ": " + this.activeCube);
             if(this.activeCube) this.cubeView.rotateCube(direction);
         },
         checkOldFace: function(){
@@ -266,7 +266,13 @@ $(document).ready(function(){
         _setupButtonClickListeners: function(){
             var self = this;
             $('[data-direction]').click(function(e){
+                // console.log("turning off pointer events");
+                $('[data-direction]').css("pointer-events", "none");
                 self.delegate.receiveTurnDirection($(this).data('direction'));
+                setTimeout(function(){
+                    // console.log("turning on pointer events");
+                    $('[data-direction]').css("pointer-events", "auto");
+                }, 1000);
             })
         },
         // markInactive: function(number){
@@ -314,8 +320,8 @@ $(document).ready(function(){
                 $(self.cube).css("-webkit-transition", "0")
                 $(self.cube).css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
                 self.assignFaces();
-            }, 3000);
-            $(self.cube).css("-webkit-transition", "transform 3s ease-in-out")
+            }, 500);
+            $(self.cube).css("-webkit-transition", "transform .5s ease-in-out")
         },
         assignFaces: function(){
             var self = this;
@@ -330,7 +336,12 @@ $(document).ready(function(){
         },
         drawPrize: function(prize, currentSide){
             // console.log(this.cube + )
-            $(this.cube + ' [data-side=' + currentSide + ']').html('<img src=' + prize + '>')
+            var imageSelector = this.cube + " [data-side='" + currentSide + "'] img";
+            $(imageSelector).fadeOut(200);
+            setTimeout(function(){
+                $(imageSelector).attr("src", prize);
+                $(imageSelector).fadeIn(300);
+            }, 200);
         }
     };
 
