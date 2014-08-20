@@ -1,13 +1,13 @@
 .move-counter{
-  height: 2rem;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 1);
-  background-color: rgba(100, 225, 100, 1);
-  text-align: center;
-  width: 7rem;
-  margin: .5rem auto 0;
-  border-radius: 5px;
-  line-height: 2rem;
+    height: 2rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(100, 225, 100, 1);
+    text-align: center;
+    width: 7rem;
+    margin: .5rem auto 0;
+    border-radius: 5px;
+    line-height: 2rem;
 }
 .game-container {
     background-color: rgba(200, 255, 200, .5);
@@ -18,41 +18,35 @@
     border-radius: 1rem;
     padding: .7rem 0rem;
 }
-
 .perspective {
-  width: 150px;
-  height: 150px;
-  position: relative;
-  perspective: 1000px;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    perspective: 1000px;
 }
-
 .cube {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  transform-style: preserve-3d;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
 }
-
 .cube .face {
-  width: 142px;
-  height: 142px;
-  display: block;
-  position: absolute;
-  border: 4px solid rgba(0, 55, 100, 1);
-  background-color: rgba(0, 0, 0, 1);
-  border-radius: 20px;
-  transition: background-color .15s linear, border-color .15s linear;
+    width: 142px;
+    height: 142px;
+    display: block;
+    position: absolute;
+    border: 4px solid rgba(0, 55, 100, 1);
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 20px;
+    transition: background-color .15s linear, border-color .15s linear;
 }
-
 .cube .front  { transform: rotateY(   0deg ) translateZ( 75px ); }
 .cube .back   { transform: rotateX( 180deg ) translateZ( 75px ); }
 .cube .right  { transform: rotateY(  90deg ) translateZ( 75px ); }
 .cube .left   { transform: rotateY( -90deg ) translateZ( 75px ); }
 .cube .top    { transform: rotateX(  90deg ) translateZ( 75px ); }
 .cube .bottom { transform: rotateX( -90deg ) translateZ( 75px ); }
-
 .cube { transition: transform 3s linear; }
-
 img {
     max-height: 122px;
     max-width: 122px;
@@ -72,26 +66,3 @@ img {
 .buttons .button {
     position: relative;
 }
-/*.button.top {
-    top: 0;
-    right: 50%;
-}
-.button.bottom {
-    bottom: 0;
-    right: 50%;
-}
-.button.left {
-    top: 50%;
-    left: 0;
-}
-.button.right {
-    top: 50%;
-    right: 0;
-}
-.button-cover {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}*/
