@@ -3,17 +3,18 @@ $(document).ready(function(){
 });
 
     function GameController(){
-        this.cubeControllers = [new CubeController(this)//,
-                                    // new CubeController(this),
-                                    // new CubeController(this),
-                                    // new CubeController(this),
-                                    // new CubeController(this),
-                                    // new CubeController(this)
+        this.cubeControllers = [new CubeController(this, 0),
+                                new CubeController(this, 1),
+                                new CubeController(this, 2),
+                                new CubeController(this, 3),
+                                new CubeController(this, 4),
+                                new CubeController(this, 5)
                                     ];
         this.gameView = new GameView(this);
         this.prizeManager = new PrizeManager();
-        this.totalMoves = 10;
+        this.totalMoves = 100;
         this.totalMatches = 0;
+        this.updateActiveCube(0);
     };
     GameController.prototype = {
         updateActiveCube: function(number){
@@ -26,49 +27,37 @@ $(document).ready(function(){
             }
         },
         statusEval: function(cubeController){
-            var skipCubeIndex = this.cubeControllers.indexOf(cubeController),
-                    facesOfOtherCubes = [],
-                    currentCubePrizes = cubeController.getAllSidePrizes();
-            this.totalMoves -= 1;
-            this.gameView.drawMoveCount(this.totalMoves);
-            if(this.totalMatches === 6){
-                this.triggerWin();
-            }else if(this.totalMoves === 0){
-                this.triggerLose();
-            }
-            for(var i = 0; i < this.cubeControllers.length; i++){
-                if(i != skipCubeIndex){
-                    facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
-                    facesOfOtherCubes = facesOfOtherCubes.sort()
-                    for(var x = 0; x < facesOfOtherCubes.length; x++){
-                        if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
-                            this.totalMatches += 1
-                            if(this.totalMatches === 6){
-                                // this.totalMoves -= 1;
-                                // this.gameView.drawMoveCount(this.totalMoves);
-                                return this.triggerWin();
-                            }else{
-                                // this.totalMoves -= 1;
-                                // this.gameView.drawMoveCount(this.totalMoves);
-                                // cubeController.gameView.updateMoveCount(this.totalMatches);
-                                if(this.totalMoves === 0){
-                                    this.triggerLose();
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes, facesOfOtherCubes, this.totalMatches));
+            var currentCubePrizes = cubeController.getAllSidePrizes();
+            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes));//, facesOfOtherCubes, this.totalMatches));
+            this.checkForGameOutcome();
         },
         checkForGameOutcome: function(){
             this.totalMoves -= 1;
             this.gameView.drawMoveCount(this.totalMoves);
-            if(this.totalMatches === 6){
+            var totalMatch = this.calcMatches();
+            console.log(totalMatch);
+            if(totalMatch){
                 this.triggerWin();
             }else if(this.totalMoves === 0){
                 this.triggerLose();
             }
+        },
+        calcMatches: function(){
+            var currentFaces = this.fetchAllFacingPrizes();
+            console.log(currentFaces)
+            if(_.uniq(currentFaces).length === 1){
+                return true;
+            }else{
+                return false;
+            }
+        },
+        fetchAllFacingPrizes: function(){
+            var facing = [];
+            for(var i = 0; i < this.cubeControllers.length; i++){
+                var cubeController = this.cubeControllers[i];
+                facing.push(cubeController.getFacingPrize());
+            }
+            return facing;
         },
         triggerWin: function(){
             alert("You've Won!")
@@ -87,8 +76,9 @@ $(document).ready(function(){
     GameView.prototype = {
         _setupCubeSelectionListeners: function(){
             var self = this;
-            $('.cubeface').click(function(e){
-                self.delegate.updateActiveCube(this.indexOf())
+            $("[data-cube]").click(function(e){
+                // self.delegate.updateActiveCube(this.indexOf())
+                self.delegate.updateActiveCube($(this).data("cube"));
             })
         },
         drawMoveCount: function(moves){
@@ -127,70 +117,31 @@ $(document).ready(function(){
                 this.reducedPrizePool = _.sample(this.potentialPrizePool, 3);
             }
         },
-        generatePrize: function(currentCubePrizes, facesOfOtherCubes, totalMatches){
-            this.possibleRemainingPrizes = this.prizePool;
-            var prizeCounter = 0
-            for(i = 0; i < currentCubePrizes.length; i++){
-                var indexOfUsedPrize = this.prizePool.indexOf(currentCubePrizes[i])
-                if(indexOfUsedPrize != -1) {
-                    this.possibleRemainingPrizes.splice(i, 1);
-                }
-            }
-            this.possibleRemainingReducedPrizes = this.reducedPrizePool;
-            for(i = 0; i < currentCubePrizes.length; i++){
-                var indexOfUsedPrize = this.reducedPrizePool.indexOf(currentCubePrizes[i])
-                if(indexOfUsedPrize != -1) {
-                    this.possibleRemainingReducedPrizes.splice(i, 1);
-                }
-            }
-            debugger
-            if(this.cubesInitiated === 0){
-                if(this.winningPrize){
-                    this.cubesInitiated += 1;
-                    console.log(this.winningPrize)
-                    return this.winningPrize
-                }else{
-                    this.cubesInitiated += 1;
-                    console.log("not a winning prize")
-                    return _.sample(this.reducedPrizePool)
-                }
-            }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
-                // debugger
-                // if(currentCubePrizes != this.reducedPrizePool){
-                //     return _.sample(this.possibleRemainingReducedPrizes)
-                // }else{
-                    return _.sample(this.possibleRemainingPrizes)
-                // }
-            }else if(totalMatches < 5){
-                if(currentCubePrizes != this.reducedPrizePool){
-                    return _.sample(this.possibleRemainingReducedPrizes)
-                }else{
-                    return _.sample(this.possibleRemainingPrizes)
-                }
-            }else{
-                if(this.winningPrize){
-                    return facesOfOtherCubes[0]
-                }else{
-                    return _.sample((_.without(this.possibleRemainingPrizes, facesOfOtherCubes[0])))
-                }
-            }
+        generatePrize: function(currentCubePrizes){
+            var limitedPrizePool = _.difference(this.prizePool, currentCubePrizes);
+            return _.sample(limitedPrizePool);
         }
     };
 
-    function CubeController(delegate){
+    function CubeController(delegate, cubeNumber){
         this.delegate = delegate;
+        this.cubeNumber = cubeNumber;
         this.cubeModel = new CubeModel(this);
-        this.cubeView = new CubeView(this);
+        this.cubeView = new CubeView(this, cubeNumber);
+        this.activeCube = false;
     };
     CubeController.prototype = {
         markInactive: function(number){
-            this.cubeView.markInactive(number)
+            // this.cubeView.markInactive(number)
+            this.activeCube = false;
         },
         markActive: function(number){
-            this.cubeView.markActive(number)
+            // this.cubeView.markActive(number)
+            this.activeCube = true;
         },
         receiveTurnDirection: function(direction){
-            this.cubeView.rotateCube(direction);
+            console.log(this.delegate.cubeControllers.indexOf(this) + ": " + this.activeCube);
+            if(this.activeCube) this.cubeView.rotateCube(direction);
         },
         checkOldFace: function(){
             this.delegate.checkForGameOutcome();
@@ -202,7 +153,7 @@ $(document).ready(function(){
             return this.cubeModel.fetchAllSidePrizes();
         },
         getFacingPrize: function(){
-            return this.cubeModel.fetchFacingPrizes();
+            return this.cubeModel.fetchFacingPrize();
         },
         receiveSideFacing: function(side){
             this.cubeModel.facing = side;
@@ -223,11 +174,9 @@ $(document).ready(function(){
         this.sides = {1: null, 2: null, 3: null, 4: null, 5: null, 6: null};
         this.facing = 0;
         this.prizesSeen = [];
-        // matrix data
     };
     CubeModel.prototype = {
         updateSideFacing: function(direction){
-            // => matrix calculations = this.facing
             if(this.sides[this.facing]){
                 this.delegate.checkOldFace();
             }else{
@@ -243,20 +192,21 @@ $(document).ready(function(){
             }
             return allSides;
         },
-        fetchFacingPrizes: function(){
+        fetchFacingPrize: function(){
             return this.sides[this.facing];
         },
         fetchCurrentSide: function(){
-            return this.facing //temporary conviluted solution, prolly need to fix
+            return this.facing
         },
         assignPrize: function(prize){
             this.sides[this.facing] = prize;
         }
     };
 
-    function CubeView(delegate){
+    function CubeView(delegate, cubeNumber){
         this.delegate = delegate;
-        this.active = false;
+        // this.active = false;
+        this.cube = "[data-cube='" + cubeNumber + "'] .cube"
         this.xAngle = 0;
         this.yAngle = 0;
         this.matrix = [
@@ -319,22 +269,22 @@ $(document).ready(function(){
                 self.delegate.receiveTurnDirection($(this).data('direction'));
             })
         },
-        markInactive: function(number){
-            this.active = true;
-            this.hideButtons(number);
-            $(".cubeface"+number).removeClass("active");
-        },
-        markActive: function(number){
-            this.active = true;
-            this.showButtons(number);
-            $(".cubeface"+number).addClass("active");
-        },
-        showButtons: function(number){
-            $(".cubeface"+number+"buttons").show();
-        },
-        hideButtons: function(number){
-            $(".cubeface"+number+"buttons").hide();
-        },
+        // markInactive: function(number){
+        //     this.active = true;
+        //     this.hideButtons(number);
+        //     $(".cubeface"+number).removeClass("active");
+        // },
+        // markActive: function(number){
+        //     this.active = true;
+        //     this.showButtons(number);
+        //     $(".cubeface"+number).addClass("active");
+        // },
+        // showButtons: function(number){
+        //     $(".cubeface"+number+"buttons").show();
+        // },
+        // hideButtons: function(number){
+        //     $(".cubeface"+number+"buttons").hide();
+        // },
         rotateCube: function(direction){
             this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
             this.animateCubeRotation(direction);
@@ -354,31 +304,33 @@ $(document).ready(function(){
             return newMatrix;
         },
         animateCubeRotation: function(direction){
+            // var activeCube = "[data-cube='" + cubeNumber + "'] .cube" //finish this
             var directions = direction.split(" ");
             this.xAngle = parseInt(directions[0]);
             this.yAngle = parseInt(directions[1]);
             var self = this;
-            $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+            $(self.cube).css("-webkitTransform", "rotateX("+self.xAngle+"deg) rotateY("+self.yAngle+"deg)");
             setTimeout(function(){
-                $('#cube').css("-webkit-transition", "0")
-                $('#cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
+                $(self.cube).css("-webkit-transition", "0")
+                $(self.cube).css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
                 self.assignFaces();
-            }, 1000);
-            $('#cube').css("-webkit-transition", "1s linear")
+            }, 500);
+            $(self.cube).css("-webkit-transition", "transform .5s ease-in-out")
         },
         assignFaces: function(){
             var self = this;
             var faces = ["front", "back", "left", "top", "right", "bottom"]
-            for(var i = 0; i < this.matrix.length; i++){
-                var direction = faces[this.matrix[i].indexOf(1)];
-                $('[data-side=' + i + ']').attr("class", "face " + direction)
-                if($('[data-side=' + i + ']').hasClass("face front")){
-                    self.delegate.receiveSideFacing(i);
+            for(var sideIndex = 0; sideIndex < this.matrix.length; sideIndex++){
+                var direction = faces[this.matrix[sideIndex].indexOf(1)];
+                $(this.cube + ' [data-side=' + sideIndex + ']').attr("class", "face " + direction)
+                if(direction === "front"){
+                    self.delegate.receiveSideFacing(sideIndex);
                 }
             }
         },
         drawPrize: function(prize, currentSide){
-            $('[data-side=' + currentSide + ']').html('<img src=' + prize + '>')
+            // console.log(this.cube + )
+            $(this.cube + ' [data-side=' + currentSide + ']').html('<img src=' + prize + '>')
         }
     };
 
