@@ -3,20 +3,29 @@ $(document).ready(function(){
 });
 
     function GameController(){
-        this.cubeControllers = [new CubeController(this, 0),
-                                new CubeController(this, 1),
-                                new CubeController(this, 2),
-                                new CubeController(this, 3),
-                                new CubeController(this, 4),
-                                new CubeController(this, 5)
-                                    ];
+        // this.cubeControllers = [new CubeController(this, 0),
+        //                         new CubeController(this, 1),
+        //                         new CubeController(this, 2),
+        //                         new CubeController(this, 3),
+        //                         new CubeController(this, 4),
+        //                         new CubeController(this, 5)
+        //                             ];
+        this.cubeControllers = this._buildCubeControllers(6);
         this.gameView = new GameView(this);
         this.prizeManager = new PrizeManager();
-        this.totalMoves = 100;
-        this.totalMatches = 0;
+        this.totalMoves = 20;
         this.updateActiveCube(0);
     };
     GameController.prototype = {
+        _buildCubeControllers: function(numberOfCubes){
+            var controllers = [];
+            for(var i = 0; i < numberOfCubes; i++){
+                var controller = new CubeController(this, i);
+                controllers.push(controller);
+            }
+            console.log(controllers);
+            return controllers;
+        },
         updateActiveCube: function(number){
             for (var i = 0; i < this.cubeControllers.length; i++){
                 if(i === number){
@@ -28,14 +37,13 @@ $(document).ready(function(){
         },
         statusEval: function(cubeController){
             var currentCubePrizes = cubeController.getAllSidePrizes();
-            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes));//, facesOfOtherCubes, this.totalMatches));
+            cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes));
             this.checkForGameOutcome();
         },
         checkForGameOutcome: function(){
             this.totalMoves -= 1;
             this.gameView.drawMoveCount(this.totalMoves);
             var totalMatch = this.calcMatches();
-            // console.log(totalMatch);
             if(totalMatch){
                 this.triggerWin();
             }else if(this.totalMoves === 0){
@@ -44,7 +52,6 @@ $(document).ready(function(){
         },
         calcMatches: function(){
             var currentFaces = this.fetchAllFacingPrizes();
-            // console.log(currentFaces)
             if(_.uniq(currentFaces).length === 1){
                 return true;
             }else{
@@ -60,12 +67,16 @@ $(document).ready(function(){
             return facing;
         },
         triggerWin: function(){
-            alert("You've Won!")
-            // - send prize info to server
-            // - server generates url with prize info, etc.
+            this.gameView.disableClicks();
+            setTimeout(function(){
+                alert("You've Won!")
+            }, 500)
         },
         triggerLose: function(){
-            alert("You LOST!!!! TRY AGAIN!!")
+            this.gameView.disableClicks();
+            setTimeout(function(){
+                alert("You LOST!!!! TRY AGAIN!!")
+            }, 500)
         }
     };
 
@@ -77,12 +88,19 @@ $(document).ready(function(){
         _setupCubeSelectionListeners: function(){
             var self = this;
             $("[data-cube]").click(function(e){
-                // self.delegate.updateActiveCube(this.indexOf())
                 self.delegate.updateActiveCube($(this).data("cube"));
             })
         },
         drawMoveCount: function(moves){
-            $('[data-moves]').html(moves)
+            $('[data-moves]').html(moves + " turns left")
+        },
+        disableClicks: function(){
+            $(document).click(function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                return false;
+            });
         }
     };
 
@@ -95,7 +113,6 @@ $(document).ready(function(){
     PrizeManager.prototype = {
         fetchPrizes: function(){
             this.potentialPrizePool = ["/assets/car.png", "/assets/cash.png", "/assets/vacation.png", "/assets/ring.png", "/assets/house.png",  "/assets/shopping.png"]
-            // $.ajax(stuff);
         },
         determineWinner: function(){
             return _.sample([true, false])
@@ -132,15 +149,14 @@ $(document).ready(function(){
     };
     CubeController.prototype = {
         markInactive: function(number){
-            // this.cubeView.markInactive(number)
             this.activeCube = false;
+            this.cubeView.deactivate();
         },
         markActive: function(number){
-            // this.cubeView.markActive(number)
             this.activeCube = true;
+            this.cubeView.activate();
         },
         receiveTurnDirection: function(direction){
-            // console.log(this.delegate.cubeControllers.indexOf(this) + ": " + this.activeCube);
             if(this.activeCube) this.cubeView.rotateCube(direction);
         },
         checkOldFace: function(){
@@ -205,59 +221,49 @@ $(document).ready(function(){
 
     function CubeView(delegate, cubeNumber){
         this.delegate = delegate;
-        // this.active = false;
         this.cube = "[data-cube='" + cubeNumber + "'] .cube"
         this.xAngle = 0;
         this.yAngle = 0;
-        this.matrix = [
-                     //   f, bk, l, t, r, bt
-      /* side 1 */  [ 1, 0, 0, 0, 0, 0 ],
-      /* side 2 */  [ 0, 1, 0, 0, 0, 0 ],
-      /* side 3 */  [ 0, 0, 1, 0, 0, 0 ],
-      /* side 4 */  [ 0, 0, 0, 1, 0, 0 ],
-      /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
-      /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
+        this.matrix = [//f, bk, l, t, r, bt
+        /* side 1 */[ 1, 0, 0, 0, 0, 0 ],
+        /* side 2 */[ 0, 1, 0, 0, 0, 0 ],
+        /* side 3 */[ 0, 0, 1, 0, 0, 0 ],
+        /* side 4 */[ 0, 0, 0, 1, 0, 0 ],
+        /* side 5 */[ 0, 0, 0, 0, 1, 0 ],
+        /* side 6 */[ 0, 0, 0, 0, 0, 1 ]
         ];
         this.rotations = {
-            // left:
-            "0 -90": [
-                //   f, bk, l, t, r, bt
-      /* side 1 */  [ 0, 0, 1, 0, 0, 0 ],
-      /* side 2 */  [ 0, 0, 0, 0, 1, 0 ],
-      /* side 3 */  [ 0, 1, 0, 0, 0, 0 ],
-      /* side 4 */  [ 0, 0, 0, 1, 0, 0 ],
-      /* side 5 */  [ 1, 0, 0, 0, 0, 0 ],
-      /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
+        "0 -90": [ // f, bk, l, t, r, bt
+        /* side 1 */[ 0, 0, 1, 0, 0, 0 ],
+        /* side 2 */[ 0, 0, 0, 0, 1, 0 ],
+        /* side 3 */[ 0, 1, 0, 0, 0, 0 ],   // left
+        /* side 4 */[ 0, 0, 0, 1, 0, 0 ],
+        /* side 5 */[ 1, 0, 0, 0, 0, 0 ],
+        /* side 6 */[ 0, 0, 0, 0, 0, 1 ]
         ],
-            // right:
-            "0 90": [
-                //   f, bk, l, t, r, bt
-      /* side 1 */  [ 0, 0, 0, 0, 1, 0 ],
-      /* side 2 */  [ 0, 0, 1, 0, 0, 0 ],
-      /* side 3 */  [ 1, 0, 0, 0, 0, 0 ],
-      /* side 4 */  [ 0, 0, 0, 1, 0, 0 ],
-      /* side 5 */  [ 0, 1, 0, 0, 0, 0 ],
-      /* side 6 */  [ 0, 0, 0, 0, 0, 1 ]
+        "0 90": [ //  f, bk, l, t, r, bt
+        /* side 1 */[ 0, 0, 0, 0, 1, 0 ],
+        /* side 2 */[ 0, 0, 1, 0, 0, 0 ],
+        /* side 3 */[ 1, 0, 0, 0, 0, 0 ],   // right
+        /* side 4 */[ 0, 0, 0, 1, 0, 0 ],
+        /* side 5 */[ 0, 1, 0, 0, 0, 0 ],
+        /* side 6 */[ 0, 0, 0, 0, 0, 1 ]
         ],
-            // up:
-            "90 0": [
-                //   f, bk, l, t, r, bt
-      /* side 1 */  [ 0, 0, 0, 1, 0, 0 ],
-      /* side 2 */  [ 0, 0, 0, 0, 0, 1 ],
-      /* side 3 */  [ 0, 0, 1, 0, 0, 0 ],
-      /* side 4 */  [ 0, 1, 0, 0, 0, 0 ],
-      /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
-      /* side 6 */  [ 1, 0, 0, 0, 0, 0 ]
+        "90 0": [ //  f, bk, l, t, r, bt
+        /* side 1 */[ 0, 0, 0, 1, 0, 0 ],
+        /* side 2 */[ 0, 0, 0, 0, 0, 1 ],
+        /* side 3 */[ 0, 0, 1, 0, 0, 0 ],   // up
+        /* side 4 */[ 0, 1, 0, 0, 0, 0 ],
+        /* side 5 */[ 0, 0, 0, 0, 1, 0 ],
+        /* side 6 */[ 1, 0, 0, 0, 0, 0 ]
         ],
-            // down:
-            "-90 0": [
-                //   f, bk, l, t, r, bt
-      /* side 1 */  [ 0, 0, 0, 0, 0, 1 ],
-      /* side 2 */  [ 0, 0, 0, 1, 0, 0 ],
-      /* side 3 */  [ 0, 0, 1, 0, 0, 0 ],
-      /* side 4 */  [ 1, 0, 0, 0, 0, 0 ],
-      /* side 5 */  [ 0, 0, 0, 0, 1, 0 ],
-      /* side 6 */  [ 0, 1, 0, 0, 0, 0 ]
+        "-90 0": [ // f, bk, l, t, r, bt
+        /* side 1 */[ 0, 0, 0, 0, 0, 1 ],
+        /* side 2 */[ 0, 0, 0, 1, 0, 0 ],
+        /* side 3 */[ 0, 0, 1, 0, 0, 0 ],   // down
+        /* side 4 */[ 1, 0, 0, 0, 0, 0 ],
+        /* side 5 */[ 0, 0, 0, 0, 1, 0 ],
+        /* side 6 */[ 0, 1, 0, 0, 0, 0 ]
         ]
     };
         this._setupButtonClickListeners();
@@ -266,31 +272,19 @@ $(document).ready(function(){
         _setupButtonClickListeners: function(){
             var self = this;
             $('[data-direction]').click(function(e){
-                // console.log("turning off pointer events");
                 $('[data-direction]').css("pointer-events", "none");
                 self.delegate.receiveTurnDirection($(this).data('direction'));
                 setTimeout(function(){
-                    // console.log("turning on pointer events");
                     $('[data-direction]').css("pointer-events", "auto");
-                }, 1000);
+                }, 500);
             })
         },
-        // markInactive: function(number){
-        //     this.active = true;
-        //     this.hideButtons(number);
-        //     $(".cubeface"+number).removeClass("active");
-        // },
-        // markActive: function(number){
-        //     this.active = true;
-        //     this.showButtons(number);
-        //     $(".cubeface"+number).addClass("active");
-        // },
-        // showButtons: function(number){
-        //     $(".cubeface"+number+"buttons").show();
-        // },
-        // hideButtons: function(number){
-        //     $(".cubeface"+number+"buttons").hide();
-        // },
+        activate: function(){
+            $(this.cube + " [data-side]").css({"background-color": "rgba(0, 210, 255, 0.97)", "border-color": "rgba(0, 115, 190, 0.95)"})
+        },
+        deactivate: function(){
+            $(this.cube + " [data-side]").css({"background-color": "rgba(0, 115, 190, 0.93)", "border-color": "rgba(0, 55, 100, .95)"})
+        },
         rotateCube: function(direction){
             this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
             this.animateCubeRotation(direction);
@@ -310,7 +304,6 @@ $(document).ready(function(){
             return newMatrix;
         },
         animateCubeRotation: function(direction){
-            // var activeCube = "[data-cube='" + cubeNumber + "'] .cube" //finish this
             var directions = direction.split(" ");
             this.xAngle = parseInt(directions[0]);
             this.yAngle = parseInt(directions[1]);
@@ -335,7 +328,6 @@ $(document).ready(function(){
             }
         },
         drawPrize: function(prize, currentSide){
-            // console.log(this.cube + )
             var imageSelector = this.cube + " [data-side='" + currentSide + "'] img";
             $(imageSelector).fadeOut(200);
             setTimeout(function(){
