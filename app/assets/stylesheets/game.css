@@ -97,7 +97,10 @@
   height: 196px;
   display: block;
   position: absolute;
-  border: 2px solid black;
+  border: 2px solid #000;
+  background-color: rgba(55, 155, 125, 1);
+  border-radius: 30px;
+  /*backface-visibility: hidden;*/
 }
 
 .cube .front  { transform: rotateY(   0deg ) translateZ( 100px ); }
@@ -107,16 +110,38 @@
 .cube .top    { transform: rotateX(  90deg ) translateZ( 100px ); }
 .cube .bottom { transform: rotateX( -90deg ) translateZ( 100px ); }
 
-.cube { transition: transform .5s linear; }
+.cube { transition: transform 3s linear; }
 
 img {
-    max-height: 96px;
-    max-width: 96px;
+    max-height: 176px;
+    max-width: 176px;
+    padding: 10px;
+    border-radius: 28px;
+    /*background-color: #000;*/
 }
 .cube-holder {
     display: inline-block;
-    margin: 25px;
+    margin: 40px;
 }
 .cube-row {
     display: inline-block;
+}
+.buttons .button {
+    position: relative;
+}
+.button.top {
+    top: 0;
+    right: 50%;
+}
+.button.bottom {
+    bottom: 0;
+    right: 50%;
+}
+.button.left {
+    top: 50%;
+    left: 0;
+}
+.button.right {
+    top: 50%;
+    right: 0;
 }

@@ -314,8 +314,8 @@ $(document).ready(function(){
                 $(self.cube).css("-webkit-transition", "0")
                 $(self.cube).css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
                 self.assignFaces();
-            }, 500);
-            $(self.cube).css("-webkit-transition", "transform .5s ease-in-out")
+            }, 3000);
+            $(self.cube).css("-webkit-transition", "transform 3s ease-in-out")
         },
         assignFaces: function(){
             var self = this;
