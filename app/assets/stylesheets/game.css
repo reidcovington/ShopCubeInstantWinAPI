@@ -39,7 +39,8 @@
     position: absolute;
     border: 4px solid rgba(0, 55, 100, 1);
     background-color: rgba(0, 0, 0, 1);
-    border-radius: 20px;
+    border-radius: 8px;
+    backface-visibility: hidden;
     transition: background-color .15s linear, border-color .15s linear;
 }
 .cube .front  { transform: rotateY(   0deg ) translateZ( 75px ); }

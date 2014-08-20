@@ -272,10 +272,10 @@ CubeView.prototype = {
         })
     },
     activate: function(){
-        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 210, 255, 0.97)", "border-color": "rgba(0, 115, 190, 0.95)"})
+        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 210, 255, 1)", "border-color": "rgba(0, 115, 190, 0.95)"})
     },
     deactivate: function(){
-        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 115, 190, 0.93)", "border-color": "rgba(0, 55, 100, .95)"})
+        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 115, 190, 1)", "border-color": "rgba(0, 55, 100, .95)"})
     },
     rotateCube: function(direction){
         this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
