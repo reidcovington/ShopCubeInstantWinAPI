@@ -26,34 +26,7 @@ $(document).ready(function(){
             }
         },
         statusEval: function(cubeController){
-            // var skipCubeIndex = this.cubeControllers.indexOf(cubeController), //current cube index
-            //         facesOfOtherCubes = [],
-            var currentCubePrizes = cubeController.getAllSidePrizes(); //array of current cube prizes
-            // this.totalMoves -= 1; // BEGIN REPEAT OF checkForGameOutcome //
-            // this.gameView.drawMoveCount(this.totalMoves);
-            // if(this.totalMatches === 6){
-            //     this.triggerWin();
-            // }else if(this.totalMoves === 0){
-            //     this.triggerLose();
-            // } // END REPEAT OF checkForGameOutcome //
-            // for(var i = 0; i < this.cubeControllers.length; i++){
-            //     if(i != skipCubeIndex){
-            //         facesOfOtherCubes += this.cubeControllers[i].getFacingPrize();
-            //         facesOfOtherCubes = facesOfOtherCubes.sort()
-            //         for(var x = 0; x < facesOfOtherCubes.length; x++){
-            //             if(facesOfOtherCubes[x] === facesOfOtherCubes[x+1]){
-            //                 this.totalMatches += 1
-            //                 if(this.totalMatches === 6){
-            //                     return this.triggerWin();
-            //                 }else{
-            //                     if(this.totalMoves === 0){
-            //                         this.triggerLose();
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
+            var currentCubePrizes = cubeController.getAllSidePrizes();
             cubeController.addPrize(this.prizeManager.generatePrize(currentCubePrizes));//, facesOfOtherCubes, this.totalMatches));
             this.checkForGameOutcome();
         },
@@ -83,8 +56,9 @@ $(document).ready(function(){
     GameView.prototype = {
         _setupCubeSelectionListeners: function(){
             var self = this;
-            $('.cubeface').click(function(e){
-                self.delegate.updateActiveCube(this.indexOf())
+            $("[data-cube]").click(function(e){
+                // self.delegate.updateActiveCube(this.indexOf())
+                console.log(this)
             })
         },
         drawMoveCount: function(moves){
@@ -123,55 +97,8 @@ $(document).ready(function(){
                 this.reducedPrizePool = _.sample(this.potentialPrizePool, 3);
             }
         },
-        generatePrize: function(currentCubePrizes){//, facesOfOtherCubes, totalMatches){
-            // this.possibleRemainingPrizes = this.prizePool;
-            // var prizeCounter = 0
-            // for(i = 0; i < currentCubePrizes.length; i++){
-            //     var indexOfUsedPrize = this.prizePool.indexOf(currentCubePrizes[i])
-            //     if(indexOfUsedPrize != -1) {
-            //         this.possibleRemainingPrizes.splice(indexOfUsedPrize, 1);
-            //     }
-            // }
-            // this.possibleRemainingReducedPrizes = this.reducedPrizePool;
-            // for(i = 0; i < currentCubePrizes.length; i++){
-            //     var indexOfUsedPrize = this.reducedPrizePool.indexOf(currentCubePrizes[i])
-            //     if(indexOfUsedPrize != -1) {
-            //         this.possibleRemainingReducedPrizes.splice(i, 1);
-            //     }
-            // }
-            // debugger
-            // if(this.cubesInitiated === 0){
-            //     if(this.winningPrize){
-            //         this.cubesInitiated += 1;
-            //         console.log(this.winningPrize)
-            //         return this.winningPrize
-            //     }else{
-            //         this.cubesInitiated += 1;
-            //         console.log("not a winning prize")
-            //         return _.sample(this.reducedPrizePool)
-            //     }
-            // }else if(facesOfOtherCubes.length === 0 && this.cubesInitiated != 0){
-            //     // debugger
-            //     // if(currentCubePrizes != this.reducedPrizePool){
-            //     //     return _.sample(this.possibleRemainingReducedPrizes)
-            //     // }else{
-            //         return _.sample(this.possibleRemainingPrizes)
-            //     // }
-            // }else if(totalMatches < 5){
-            //     if(currentCubePrizes != this.reducedPrizePool){
-            //         return _.sample(this.possibleRemainingReducedPrizes)
-            //     }else{
-            //         return _.sample(this.possibleRemainingPrizes)
-            //     }
-            // }else{
-            //     if(this.winningPrize){
-            //         return facesOfOtherCubes[0]
-            //     }else{
-            //         return _.sample((_.without(this.possibleRemainingPrizes, facesOfOtherCubes[0])))
-            //     }
-            // }
+        generatePrize: function(currentCubePrizes){
             var limitedPrizePool = _.difference(this.prizePool, currentCubePrizes);
-            // console.log(limitedPrizePool)
             return _.sample(limitedPrizePool);
         }
     };
@@ -222,11 +149,9 @@ $(document).ready(function(){
         this.sides = {1: null, 2: null, 3: null, 4: null, 5: null, 6: null};
         this.facing = 0;
         this.prizesSeen = [];
-        // matrix data
     };
     CubeModel.prototype = {
         updateSideFacing: function(direction){
-            // => matrix calculations = this.facing
             if(this.sides[this.facing]){
                 this.delegate.checkOldFace();
             }else{
@@ -246,7 +171,7 @@ $(document).ready(function(){
             return this.sides[this.facing];
         },
         fetchCurrentSide: function(){
-            return this.facing //temporary conviluted solution, prolly need to fix
+            return this.facing
         },
         assignPrize: function(prize){
             this.sides[this.facing] = prize;
@@ -352,18 +277,19 @@ $(document).ready(function(){
             }
             return newMatrix;
         },
-        animateCubeRotation: function(direction){
+        animateCubeRotation: function(direction, cubeNumber){
+            var activeCube = "[data-cube='" + cubeNumber + "'] .cube" //finish this
             var directions = direction.split(" ");
             this.xAngle = parseInt(directions[0]);
             this.yAngle = parseInt(directions[1]);
             var self = this;
-            $('#cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
+            $('.cube').css("-webkitTransform", "rotateX("+this.xAngle+"deg) rotateY("+this.yAngle+"deg)");
             setTimeout(function(){
-                $('#cube').css("-webkit-transition", "0")
-                $('#cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
+                $('.cube').css("-webkit-transition", "0")
+                $('.cube').css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
                 self.assignFaces();
-            }, 1000);
-            $('#cube').css("-webkit-transition", "1s linear")
+            }, 500);
+            $('.cube').css("-webkit-transition", "transform .5s ease-in-out")
         },
         assignFaces: function(){
             var self = this;

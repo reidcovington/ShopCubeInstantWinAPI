@@ -1,4 +1,4 @@
-#perspective {
+/*#perspective {
   -webkit-perspective: 1000px;
   -webkit-perspective-origin: 80% 300px;
   padding: 100px 100px 100px 100px;
@@ -22,7 +22,7 @@
   background-color: rgba(50, 50, 50, .8);
   border: 1px solid black;
 /*  -webkit-transition: -webkit-transform 1s linear;
-  -webkit-transform-style: preserve-3d;*/
+  -webkit-transform-style: preserve-3d;
 }
 
 .prize {
@@ -30,7 +30,7 @@
   height: 300px;
   width: 300px;
   padding: 30px;
-  /*background-color: red;*/
+  /*background-color: red;
 }
 
 #cube .top  {
@@ -69,6 +69,7 @@
     filter: FlipV FlipH;
 }
 
+*/
 .move-counter{
   height: 50px;
   width: 50px;
@@ -76,3 +77,46 @@
   border-radius: 10px;
 }
 
+
+.perspective {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  perspective: 1000px;
+}
+
+.cube {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.cube .face {
+  width: 196px;
+  height: 196px;
+  display: block;
+  position: absolute;
+  border: 2px solid black;
+}
+
+.cube .front  { transform: rotateY(   0deg ) translateZ( 100px ); }
+.cube .back   { transform: rotateX( 180deg ) translateZ( 100px ); }
+.cube .right  { transform: rotateY(  90deg ) translateZ( 100px ); }
+.cube .left   { transform: rotateY( -90deg ) translateZ( 100px ); }
+.cube .top    { transform: rotateX(  90deg ) translateZ( 100px ); }
+.cube .bottom { transform: rotateX( -90deg ) translateZ( 100px ); }
+
+.cube { transition: transform .5s linear; }
+
+img {
+    max-height: 196px;
+    max-width: 196px;
+}
+.cube-holder {
+    display: inline-block;
+    margin: 25px;
+}
+.cube-row {
+    display: inline-block;
+}
