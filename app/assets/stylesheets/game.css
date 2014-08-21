@@ -69,3 +69,11 @@ img {
 .buttons .button {
     position: relative;
 }
+.preload-imgs {
+    height: 0px;
+    width: 0px;
+    margin: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
