@@ -104,7 +104,7 @@ function PrizeManager(){
 };
 PrizeManager.prototype = {
     fetchPrizes: function(){
-        this.potentialPrizePool = ["<%= asset_path( '/assets/car.png' ) %>", "/assets/cash.png", "/assets/vacation.png", "/assets/ring.png", "/assets/house.png",  "/assets/shopping.png"]
+        this.potentialPrizePool = ["/assets/car.png", "/assets/cash.png", "/assets/vacation.png", "/assets/ring.png", "/assets/house.png",  "/assets/shopping.png"]
     },
     determineWinner: function(){
         return _.sample([true, false])
