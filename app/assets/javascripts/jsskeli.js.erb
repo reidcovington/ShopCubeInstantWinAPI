@@ -268,7 +268,7 @@ CubeView.prototype = {
             self.delegate.receiveTurnDirection($(this).data('direction'));
             setTimeout(function(){
                 $('[data-direction]').css("pointer-events", "auto");
-            }, 800);
+            }, 1000);
         })
     },
     activate: function(){
