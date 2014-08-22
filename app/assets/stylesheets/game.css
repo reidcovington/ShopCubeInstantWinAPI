@@ -5,20 +5,34 @@
     background-color: rgba(100, 225, 100, 1);
     text-align: center;
     width: 15rem;
-    margin: .3rem auto 0;
+    margin: 1.5rem auto 0;
     border-radius: 5px;
     line-height: 2.3rem;
     font-size: 2rem;
     padding: .1rem;
 }
+.rules {
+    height: auto;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(225, 170, 100, .7);
+    margin: 0 auto 2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 1rem;
+    line-height: 1.25rem;
+    letter-spacing: 1px;
+}
+.rules span {
+    font-weight: bold;
+}
 .game-container {
     background-color: rgba(200, 255, 200, .5);
-    max-height: 600px;
-    max-width: 600px;
+    max-height: 700px;
+    max-width: 700px;
     margin: 2rem auto;
     border: 2px solid rgba(170, 255, 170, .5);
     border-radius: 1rem;
-    padding: .7rem 0rem;
+    padding: 2rem 1rem;
 }
 .perspective {
     width: 150px;
@@ -39,8 +53,9 @@
     position: absolute;
     border: 4px solid rgba(0, 55, 100, 1);
     background-color: rgba(0, 0, 0, 1);
-    border-radius: 20px;
-    transition: background-color .15s linear, border-color .15s linear;
+    border-radius: 8px;
+    /*backface-visibility: hidden;*/
+    transition: background-color .25s linear, border-color .25s linear;
 }
 .cube .front  { transform: rotateY(   0deg ) translateZ( 75px ); }
 .cube .back   { transform: rotateX( 180deg ) translateZ( 75px ); }
@@ -57,14 +72,78 @@ img {
 }
 .cube-holder {
     display: inline-block;
-    margin: 20px;
+    margin: 2rem;
 }
 .cube-row {
     display: inline-block;
 }
 .buttons {
-    position: relative;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 .buttons .button {
-    position: relative;
+    position: absolute;
+    padding: 5px;
+    min-height: initial;
+    line-height: normal;
+}
+[data-up] {
+    border-top-right-radius: 10rem;
+    border-top-left-radius: 10rem;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 3rem;
+    width: 3rem;
+    height: 2rem;
+    top: -52px;
+    right: 31%;
+}
+[data-down] {
+    border-top-right-radius: 3rem;
+    border-top-left-radius: 3rem;
+    border-bottom-left-radius: 10rem;
+    border-bottom-right-radius: 10rem;
+    width: 3rem;
+    height: 2rem;
+    bottom: -52px;
+    right: 31%;
+}
+[data-left] {
+    border-top-right-radius: 3rem;
+    border-top-left-radius: 10rem;
+    border-bottom-left-radius: 10rem;
+    border-bottom-right-radius: 3rem;
+    width: 2rem;
+    height: 3rem;
+    left: -52px;
+    top: 31%;
+}
+[data-right] {
+    border-top-right-radius: 10rem;
+    border-top-left-radius: 3rem;
+    border-bottom-left-radius: 3rem;
+    border-bottom-right-radius: 10rem;
+    width: 2rem;
+    height: 3rem;
+    right: -52px;
+    top: 31%;
+}
+.preload-imgs img {
+    height: 0px;
+    width: 0px;
+    margin: 0px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.fa-arrow-left:before,
+.fa-arrow-right:before {
+    line-height: 2.9rem;
+}
+.fa-2:before {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 2rem;
 }

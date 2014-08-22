@@ -1,200 +1,200 @@
 <div class="game-container">
+    <div class="rules"><span>HOW TO PLAY: </span> Click a cube to select it. Click the arrows to turn it. You win if you can display the same prize on all six cubes before running out of turns. Good luck!</div>
     <center>
         <div class="cube-row">
             <div data-cube="0" class="cube-holder">
-<!--         <div class="buttons">
-<div data-direction="90 0" class="button button-gray">Up</div>
-<div data-direction="-90 0" class="button button-gray">Down</div>
-<div data-direction="0 90" class="button button-gray">Right</div>
-<div data-direction="0 -90" class="button button-gray">Left</div>
-</div> -->
-<div class="perspective">
-    <div class="cube">
-        <div data-side="0" class="face front">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
+                <div class="perspective">
+                    <div class="buttons">
+                        <div data-up data-direction="90 0" class="button button-gray fa fa-arrow-up fa-2"></div>
+                        <div data-down data-direction="-90 0" class="button button-gray fa fa-arrow-down fa-2"></div>
+                        <div data-right data-direction="0 90" class="button button-gray fa fa-arrow-right fa-2"></div>
+                        <div data-left data-direction="0 -90" class="button button-gray fa fa-arrow-left fa-2"></div>
+                    </div>
+                    <div class="cube">
+                        <div data-side="0" class="face front">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="1" class="face back">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="2" class="face left">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="3" class="face top">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="4" class="face right">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="5" class="face bottom">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-cube="1" class="cube-holder">
+                <div class="perspective">
+                    <div class="buttons">
+                        <div data-up data-direction="90 0" class="button button-gray fa fa-arrow-up fa-2"></div>
+                        <div data-down data-direction="-90 0" class="button button-gray fa fa-arrow-down fa-2"></div>
+                        <div data-right data-direction="0 90" class="button button-gray fa fa-arrow-right fa-2"></div>
+                        <div data-left data-direction="0 -90" class="button button-gray fa fa-arrow-left fa-2"></div>
+                    </div>
+                    <div class="cube">
+                        <div data-side="0" class="face front">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="1" class="face back">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="2" class="face left">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="3" class="face top">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="4" class="face right">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="5" class="face bottom">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-cube="2" class="cube-holder">
+                <div class="perspective">
+                    <div class="buttons">
+                        <div data-up data-direction="90 0" class="button button-gray fa fa-arrow-up fa-2"></div>
+                        <div data-down data-direction="-90 0" class="button button-gray fa fa-arrow-down fa-2"></div>
+                        <div data-right data-direction="0 90" class="button button-gray fa fa-arrow-right fa-2"></div>
+                        <div data-left data-direction="0 -90" class="button button-gray fa fa-arrow-left fa-2"></div>
+                    </div>
+                    <div class="cube">
+                        <div data-side="0" class="face front">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="1" class="face back">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="2" class="face left">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="3" class="face top">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="4" class="face right">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="5" class="face bottom">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div data-side="1" class="face back">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
+    </center>
+    <center>
+        <div class="cube-row">
+            <div data-cube="3" class="cube-holder">
+                <div class="perspective">
+                    <div class="buttons">
+                        <div data-up data-direction="90 0" class="button button-gray fa fa-arrow-up fa-2"></div>
+                        <div data-down data-direction="-90 0" class="button button-gray fa fa-arrow-down fa-2"></div>
+                        <div data-right data-direction="0 90" class="button button-gray fa fa-arrow-right fa-2"></div>
+                        <div data-left data-direction="0 -90" class="button button-gray fa fa-arrow-left fa-2"></div>
+                    </div>
+                    <div class="cube">
+                        <div data-side="0" class="face front">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="1" class="face back">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="2" class="face left">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="3" class="face top">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="4" class="face right">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="5" class="face bottom">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-cube="4" class="cube-holder">
+                <div class="perspective">
+                    <div class="buttons">
+                        <div data-up data-direction="90 0" class="button button-gray fa fa-arrow-up fa-2"></div>
+                        <div data-down data-direction="-90 0" class="button button-gray fa fa-arrow-down fa-2"></div>
+                        <div data-right data-direction="0 90" class="button button-gray fa fa-arrow-right fa-2"></div>
+                        <div data-left data-direction="0 -90" class="button button-gray fa fa-arrow-left fa-2"></div>
+                    </div>
+                    <div class="cube">
+                        <div data-side="0" class="face front">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="1" class="face back">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="2" class="face left">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="3" class="face top">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="4" class="face right">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="5" class="face bottom">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-cube="5" class="cube-holder">
+                <div class="perspective">
+                    <div class="buttons">
+                        <div data-up data-direction="90 0" class="button button-gray fa fa-arrow-up fa-2"></div>
+                        <div data-down data-direction="-90 0" class="button button-gray fa fa-arrow-down fa-2"></div>
+                        <div data-right data-direction="0 90" class="button button-gray fa fa-arrow-right fa-2"></div>
+                        <div data-left data-direction="0 -90" class="button button-gray fa fa-arrow-left fa-2"></div>
+                    </div>
+                    <div class="cube">
+                        <div data-side="0" class="face front">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="1" class="face back">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="2" class="face left">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="3" class="face top">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="4" class="face right">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                        <div data-side="5" class="face bottom">
+                            <div class="prize"><img src="<%= asset_path 'question-mark.png' %>"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div data-side="2" class="face left">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="3" class="face top">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="4" class="face right">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="5" class="face bottom">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-    </div>
+    </center>
+    <div data-moves class="move-counter">20 turns left</div>
 </div>
-</div>
-<div data-cube="1" class="cube-holder">
-<!--         <div class="buttons">
-<div data-direction="90 0" class="button button-gray">Up</div>
-<div data-direction="-90 0" class="button button-gray">Down</div>
-<div data-direction="0 90" class="button button-gray">Right</div>
-<div data-direction="0 -90" class="button button-gray">Left</div>
-</div> -->
-<div class="perspective">
-    <div class="cube">
-        <div data-side="0" class="face front">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="1" class="face back">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="2" class="face left">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="3" class="face top">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="4" class="face right">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="5" class="face bottom">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-    </div>
-</div>
-</div>
-<div data-cube="2" class="cube-holder">
-<!--         <div class="buttons">
-<div data-direction="90 0" class="button button-gray">Up</div>
-<div data-direction="-90 0" class="button button-gray">Down</div>
-<div data-direction="0 90" class="button button-gray">Right</div>
-<div data-direction="0 -90" class="button button-gray">Left</div>
-</div> -->
-<div class="perspective">
-    <div class="cube">
-        <div data-side="0" class="face front">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="1" class="face back">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="2" class="face left">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="3" class="face top">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="4" class="face right">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="5" class="face bottom">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</center>
-<center>
-    <div class="cube-row">
-        <div data-cube="3" class="cube-holder">
-<!--         <div class="buttons">
-<div data-direction="90 0" class="button button-gray">Up</div>
-<div data-direction="-90 0" class="button button-gray">Down</div>
-<div data-direction="0 90" class="button button-gray">Right</div>
-<div data-direction="0 -90" class="button button-gray">Left</div>
-</div> -->
-<div class="perspective">
-    <div class="cube">
-        <div data-side="0" class="face front">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="1" class="face back">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="2" class="face left">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="3" class="face top">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="4" class="face right">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="5" class="face bottom">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-    </div>
-</div>
-</div>
-<div data-cube="4" class="cube-holder">
-<!--         <div class="buttons">
-<div data-direction="90 0" class="button button-gray top">Up</div>
-<div data-direction="-90 0" class="button button-gray bottom">Down</div>
-<div data-direction="0 90" class="button button-gray right">Right</div>
-<div data-direction="0 -90" class="button button-gray left">Left</div>
-</div> -->
-<div class="perspective">
-    <div class="cube">
-        <div data-side="0" class="face front">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="1" class="face back">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="2" class="face left">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="3" class="face top">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="4" class="face right">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="5" class="face bottom">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-    </div>
-</div>
-</div>
-<div data-cube="5" class="cube-holder">
-<!--         <div class="buttons">
-<div data-direction="90 0" class="button button-gray">Up</div>
-<div data-direction="-90 0" class="button button-gray">Down</div>
-<div data-direction="0 90" class="button button-gray">Right</div>
-<div data-direction="0 -90" class="button button-gray">Left</div>
-</div> -->
-<div class="perspective">
-    <div class="cube">
-        <div data-side="0" class="face front">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="1" class="face back">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="2" class="face left">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="3" class="face top">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="4" class="face right">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-        <div data-side="5" class="face bottom">
-            <div class="prize"><img src="/assets/question-mark.png"></div>
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</center>
-<center>
-    <div class="buttons">
-        <div class="button-cover"></div>
-        <div data-direction="90 0" class="button button-gray">Up</div>
-        <div data-direction="-90 0" class="button button-gray">Down</div>
-        <div data-direction="0 90" class="button button-gray">Right</div>
-        <div data-direction="0 -90" class="button button-gray">Left</div>
-    </div>
-</center>
-<div data-moves class="move-counter">20 turns left</div>
+<div class="preload-imgs">
+    <img src="<%= asset_path 'house.png' %>" alt="">
+    <img src="<%= asset_path 'car.png' %>" alt="">
+    <img src="<%= asset_path 'cash.png' %>" alt="">
+    <img src="<%= asset_path 'shopping.png' %>" alt="">
+    <img src="<%= asset_path 'vacation.png' %>" alt="">
+    <img src="<%= asset_path 'ring.png' %>" alt="">
 </div>

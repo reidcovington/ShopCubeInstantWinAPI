@@ -22,6 +22,7 @@ GameController.prototype = {
         for (var i = 0; i < this.cubeControllers.length; i++){
             if(i === number){
                 this.cubeControllers[i].markActive(i);
+                this.gameView.drawButtons(i);
             }else{
                 this.cubeControllers[i].markInactive(i);
             }
@@ -93,6 +94,13 @@ GameView.prototype = {
             e.stopImmediatePropagation();
             return false;
         });
+    },
+    drawButtons: function(buttonIndex){
+        var buttonSets = $(".buttons");
+        buttonSets.fadeOut(150);
+        setTimeout(function(){
+            $(buttonSets[buttonIndex]).fadeIn(300);
+        }, 150);
     }
 };
 
@@ -104,7 +112,7 @@ function PrizeManager(){
 };
 PrizeManager.prototype = {
     fetchPrizes: function(){
-        this.potentialPrizePool = ["/assets/car.png", "/assets/cash.png", "/assets/vacation.png", "/assets/ring.png", "/assets/house.png",  "/assets/shopping.png"]
+        this.potentialPrizePool = ["<%= asset_path 'car.png' %>", "<%= asset_path 'cash.png' %>", "<%= asset_path 'vacation.png' %>", "<%= asset_path 'ring.png' %>", "<%= asset_path 'house.png' %>",  "<%= asset_path 'shopping.png' %>"]
     },
     determineWinner: function(){
         return _.sample([true, false])
@@ -264,18 +272,19 @@ CubeView.prototype = {
     _setupButtonClickListeners: function(){
         var self = this;
         $('[data-direction]').click(function(e){
+            e.stopPropagation();
             $('[data-direction]').css("pointer-events", "none");
             self.delegate.receiveTurnDirection($(this).data('direction'));
             setTimeout(function(){
                 $('[data-direction]').css("pointer-events", "auto");
-            }, 500);
+            }, 1000);
         })
     },
     activate: function(){
-        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 210, 255, 0.97)", "border-color": "rgba(0, 115, 190, 0.95)"})
+        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 210, 255, .9)", "border-color": "rgba(0, 115, 190, 0.95)"})
     },
     deactivate: function(){
-        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 115, 190, 0.93)", "border-color": "rgba(0, 55, 100, .95)"})
+        $(this.cube + " [data-side]").css({"background-color": "rgba(0, 115, 190, .9)", "border-color": "rgba(0, 55, 100, .95)"})
     },
     rotateCube: function(direction){
         this.matrix = this.createRotatedMatrix(this.matrix, this.rotations[direction]);
