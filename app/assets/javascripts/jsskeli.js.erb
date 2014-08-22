@@ -22,6 +22,7 @@ GameController.prototype = {
         for (var i = 0; i < this.cubeControllers.length; i++){
             if(i === number){
                 this.cubeControllers[i].markActive(i);
+                this.gameView.drawButtons(i);
             }else{
                 this.cubeControllers[i].markInactive(i);
             }
@@ -93,6 +94,13 @@ GameView.prototype = {
             e.stopImmediatePropagation();
             return false;
         });
+    },
+    drawButtons: function(buttonIndex){
+        var buttonSets = $(".buttons");
+        buttonSets.fadeOut(50);
+        setTimeout(function(){
+            $(buttonSets[buttonIndex]).fadeIn(100);
+        }, 50);
     }
 };
 
@@ -264,6 +272,7 @@ CubeView.prototype = {
     _setupButtonClickListeners: function(){
         var self = this;
         $('[data-direction]').click(function(e){
+            e.stopPropagation();
             $('[data-direction]').css("pointer-events", "none");
             self.delegate.receiveTurnDirection($(this).data('direction'));
             setTimeout(function(){
