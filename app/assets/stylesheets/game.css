@@ -11,6 +11,20 @@
     font-size: 2rem;
     padding: .1rem;
 }
+.rules {
+    height: auto;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(225, 170, 100, .7);
+    margin: 0 auto 2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 1rem;
+    line-height: 1.25rem;
+    letter-spacing: 1px;
+}
+.rules span {
+    font-weight: bold;
+}
 .game-container {
     background-color: rgba(200, 255, 200, .5);
     max-height: 700px;
@@ -41,7 +55,7 @@
     background-color: rgba(0, 0, 0, 1);
     border-radius: 8px;
     /*backface-visibility: hidden;*/
-    transition: background-color .15s linear, border-color .15s linear;
+    transition: background-color .25s linear, border-color .25s linear;
 }
 .cube .front  { transform: rotateY(   0deg ) translateZ( 75px ); }
 .cube .back   { transform: rotateX( 180deg ) translateZ( 75px ); }
@@ -124,4 +138,12 @@ img {
     position: absolute;
     top: 0;
     left: 0;
+}
+.fa-arrow-left:before,
+.fa-arrow-right:before {
+    line-height: 2.9rem;
+}
+.fa-2:before {
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 2rem;
 }
