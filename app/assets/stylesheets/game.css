@@ -38,7 +38,7 @@
     width: 150px;
     height: 150px;
     position: relative;
-    perspective: 1000px;
+    perspective: 200px;
 }
 .cube {
     width: 100%;
@@ -63,7 +63,8 @@
 .cube .left   { transform: rotateY( -90deg ) translateZ( 75px ); }
 .cube .top    { transform: rotateX(  90deg ) translateZ( 75px ); }
 .cube .bottom { transform: rotateX( -90deg ) translateZ( 75px ); }
-.cube { transition: transform 3s linear; }
+.cube { transition: transform 3s ease-in-out; }
+.cube { transform: translateZ(-75px); }
 img {
     max-height: 122px;
     max-width: 122px;

@@ -277,7 +277,7 @@ CubeView.prototype = {
             self.delegate.receiveTurnDirection($(this).data('direction'));
             setTimeout(function(){
                 $('[data-direction]').css("pointer-events", "auto");
-            }, 1000);
+            }, 1600);
         })
     },
     activate: function(){
@@ -309,13 +309,13 @@ CubeView.prototype = {
         this.xAngle = parseInt(directions[0]);
         this.yAngle = parseInt(directions[1]);
         var self = this;
-        $(self.cube).css("-webkitTransform", "rotateX("+self.xAngle+"deg) rotateY("+self.yAngle+"deg)");
+        $(self.cube).css("transform", "translateZ(-75px) rotateX("+self.xAngle+"deg) rotateY("+self.yAngle+"deg)");
         setTimeout(function(){
-            $(self.cube).css("-webkit-transition", "0")
-            $(self.cube).css("-webkitTransform", "rotateX(0deg) rotateY(0deg)");
+            $(self.cube).css("transition", "0")
+            $(self.cube).css("transform", "translateZ(-75px) rotateX(0deg) rotateY(0deg)");
             self.assignFaces();
-        }, 500);
-        $(self.cube).css("-webkit-transition", "transform .5s ease-in-out")
+        }, 1500);
+        $(self.cube).css("transition", "transform 1.5s ease-in-out")
     },
     assignFaces: function(){
         var self = this;
