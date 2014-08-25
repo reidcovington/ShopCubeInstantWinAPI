@@ -1,10 +1,15 @@
+.walmart {
+    font-family: Arial,sans-serif;
+    text-align: center;
+    font-weight: 700;
+    font-size: 19px;
+}
 .walmart img{
    width: 100%;
     /*float: left;
     margin: 0 0 1em 0;
     padding: 0;*/
 }
-
 .rules {
     height: auto;
     color: rgba(255, 255, 255, 1);
