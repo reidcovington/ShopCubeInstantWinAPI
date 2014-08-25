@@ -38,7 +38,8 @@
     width: 150px;
     height: 150px;
     position: relative;
-    perspective: 1000px;
+    perspective: 500px;
+    -webkit-perspective-origin: 85% 15%;
 }
 .cube {
     width: 100%;
@@ -57,13 +58,13 @@
     /*backface-visibility: hidden;*/
     transition: background-color .25s linear, border-color .25s linear;
 }
-.cube .front  { transform: rotateY(   0deg ) translateZ( 75px ); }
-.cube .back   { transform: rotateX( 180deg ) translateZ( 75px ); }
-.cube .right  { transform: rotateY(  90deg ) translateZ( 75px ); }
-.cube .left   { transform: rotateY( -90deg ) translateZ( 75px ); }
-.cube .top    { transform: rotateX(  90deg ) translateZ( 75px ); }
-.cube .bottom { transform: rotateX( -90deg ) translateZ( 75px ); }
-.cube { transition: transform 3s linear; }
+.cube .front  { transform: rotateY(  -10deg ) rotateX(  -10deg ) translateZ( 75px ); }
+.cube .back   { transform: rotateY(  -10deg ) rotateX(  170deg ) translateZ( 75px ); }
+.cube .right  { transform: rotateX(  -10deg ) rotateY(  80deg )  translateZ( 75px ); }
+.cube .left   { transform: rotateX(  -10deg ) rotateY(  -100deg ) translateZ( 75px ); }
+.cube .top    { transform: rotateY(  -10deg ) rotateX(  80deg ) translateZ( 75px ); }
+.cube .bottom { transform: rotateY(  -10deg ) rotateX(  -100deg ) translateZ( 75px ); }
+.cube { transition: transform 2s linear; }
 img {
     max-height: 122px;
     max-width: 122px;
