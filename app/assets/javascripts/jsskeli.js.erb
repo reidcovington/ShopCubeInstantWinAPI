@@ -314,8 +314,8 @@ CubeView.prototype = {
             $(self.cube).css("transition", "0")
             $(self.cube).css("transform", "translateZ(-75px) rotateX(0deg) rotateY(0deg)");
             self.assignFaces();
-        }, 1500);
-        $(self.cube).css("transition", "transform 1.5s ease-in-out")
+        }, 2000);
+        $(self.cube).css("-webkit-transition", "transform 2s ease-in-out")
     },
     assignFaces: function(){
         var self = this;
