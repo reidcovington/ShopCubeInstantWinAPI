@@ -160,3 +160,8 @@
     color: rgba(0, 0, 0, 0.4);
     font-size: 2rem;
 }
+.shopcube {
+    position: absolute;
+    right: 18rem;
+    color: #777777
+}
