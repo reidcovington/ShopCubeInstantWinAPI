@@ -1,16 +1,10 @@
-.move-counter{
-    height: 2.5rem;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 1);
-    background-color: rgba(100, 225, 100, 1);
-    text-align: center;
-    width: 15rem;
-    margin: 1.5rem auto 0;
-    border-radius: 5px;
-    line-height: 2.3rem;
-    font-size: 2rem;
-    padding: .1rem;
+.walmart img{
+   width: 100%;
+    /*float: left;
+    margin: 0 0 1em 0;
+    padding: 0;*/
 }
+
 .rules {
     height: auto;
     color: rgba(255, 255, 255, 1);
@@ -24,6 +18,19 @@
 }
 .rules span {
     font-weight: bold;
+}
+.move-counter{
+    height: 2.5rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(100, 225, 100, 1);
+    text-align: center;
+    width: 15rem;
+    margin: 1.5rem auto 0;
+    border-radius: 5px;
+    line-height: 2.3rem;
+    font-size: 2rem;
+    padding: .1rem;
 }
 .game-container {
     background-color: rgba(200, 255, 200, .5);
@@ -65,7 +72,7 @@
 .cube .top    { transform: rotateY(  -10deg ) rotateX(  80deg ) translateZ( 75px ); }
 .cube .bottom { transform: rotateY(  -10deg ) rotateX(  -100deg ) translateZ( 75px ); }
 .cube { transition: transform 2s linear; }
-img {
+.prize img {
     max-height: 122px;
     max-width: 122px;
     padding: 10px;
