@@ -98,15 +98,14 @@ GameView.prototype = {
         $('[data-moves]').html(moves + " turns left")
     },
     drawPrizeMatches: function(prizeMatches){
-        // for (i=0; i < prizeMatches.length; i++){
-            var prizeNumber = 1
-            $("[data-prizes] img").each(function(){
-             if(prizeMatches[($(this).attr('src'))]){
-                $("[data-matches] div:nth-child(" + prizeNumber +")").html(prizeMatches[($(this).attr('src'))])
-             }
-             prizeNumber += 1;
-            });
-        // }
+        var prizeNumber = 1
+        $("[data-matches] div").html("0")
+        $("[data-prizes] img").each(function(){
+         if(prizeMatches[($(this).attr('src'))]){
+            $("[data-matches] div:nth-child(" + prizeNumber +")").html(prizeMatches[($(this).attr('src'))])
+         }
+         prizeNumber += 1;
+        });
     },
     disableClicks: function(){
         $(document).click(function(e) {
