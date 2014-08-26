@@ -185,6 +185,8 @@
 }
 .prize-gallery .match-counter .number {
     height: 107px;
+    width: 10px;
+    /*background-color: #hhh;*/
     vertical-align: middle;
 }
 .fa-arrow-left:before,
