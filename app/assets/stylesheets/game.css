@@ -1,3 +1,8 @@
+.api-container {
+    max-height: 800px;
+    max-width: 1220px;
+    display: inline-flex;
+}
 .walmart {
     font-family: Arial,sans-serif;
     text-align: center;
@@ -37,7 +42,7 @@
 .game-container {
     background-color: rgba(200, 255, 200, .5);
     max-height: 700px;
-    max-width: 720px;
+    width: 720px;
     margin: 2rem auto;
     border: 2px solid rgba(170, 255, 170, .5);
     border-radius: 1rem;
@@ -154,13 +159,33 @@
     top: 0;
     left: 0;
 }*/
-.prize-gallery {
+.buffer {
+    float: left;
     width: 200px;
 }
-.prize-gallery img {
+.prize-gallery {
+    float: right;
+    width: 200px;
+    margin-left: 3rem;
+    margin-top: 5rem;
+    display: inline-flex;
+}
+.prize-gallery .prizes {
+    float: left;
+}
+.prize-gallery .prizes img {
     height: 100px;
     background-color: rgba(60, 225, 100, .7);
     border-radius: 5px;
+}
+.prize-gallery .match-counter {
+    float: right;
+    width: 100px;
+
+}
+.prize-gallery .match-counter .number {
+    height: 107px;
+    vertical-align: middle;
 }
 .fa-arrow-left:before,
 .fa-arrow-right:before {

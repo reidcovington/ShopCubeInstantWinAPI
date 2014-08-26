@@ -2,9 +2,8 @@
     <img src="<%= asset_path 'walmart.png' %>" alt="">
     Thank you for your order! $114.14 with couponcode: win100 unlocks the game with prizes below. Good luck!
 </div>
-
 <div class="api-container">
-    <div class="prize-gallery hidden"></div>
+    <div class="buffer"></div>
     <div class="game-container">
         <div class="rules"><span>HOW TO PLAY: </span> Click a cube to select it. Click the arrows to turn it. You win if you can display the same prize on all six cubes before running out of turns. Good luck!</div>
         <center>
@@ -199,11 +198,23 @@
         <div class="shopcube"> powered by ShopCube</div>
     </div>
     <div class="prize-gallery">
-        <img src="<%= asset_path 'house.png' %>" alt="house">
-        <img src="<%= asset_path 'car.png' %>" alt="car">
-        <img src="<%= asset_path 'cash.png' %>" alt="cash">
-        <img src="<%= asset_path 'shopping.png' %>" alt="shopping">
-        <img src="<%= asset_path 'vacation.png' %>" alt="vacation">
-        <img src="<%= asset_path 'ring.png' %>" alt="ring">
+        <div class="prizes">
+            <img src="<%= asset_path 'house.png' %>" alt="house">
+            <img src="<%= asset_path 'car.png' %>" alt="car">
+            <img src="<%= asset_path 'cash.png' %>" alt="cash">
+            <img src="<%= asset_path 'shopping.png' %>" alt="shopping">
+            <img src="<%= asset_path 'vacation.png' %>" alt="vacation">
+            <img src="<%= asset_path 'ring.png' %>" alt="ring">
+        </div>
+        <center>
+        <div class="match-counter">
+            <div data-prizeone-match-counter class="button button-small number">0</div>
+            <div data-prizeone-match-counter class="number">0</div>
+            <div data-prizeone-match-counter class="number">0</div>
+            <div data-prizeone-match-counter class="number">0</div>
+            <div data-prizeone-match-counter class="number">0</div>
+            <div data-prizeone-match-counter class="number">0</div>
+        </div>
+        </center>
     </div>
 </div>
