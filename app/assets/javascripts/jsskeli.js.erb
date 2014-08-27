@@ -56,8 +56,8 @@ GameController.prototype = {
     calcPrizeMatches: function(){
         var currentFaces = this.fetchAllFacingPrizes().sort();
         var  count = {}
-        currentFaces.forEach(function(i) {
-            count[i] = (count[i]||0)+1;
+        currentFaces.forEach(function(element) {
+            count[element] = (count[element]||0)+1;
         })
         return count
     },
@@ -98,13 +98,10 @@ GameView.prototype = {
         $('[data-moves]').html(moves + " turns left")
     },
     drawPrizeMatches: function(prizeMatches){
-        var prizeNumber = 1
-        $("[data-matches] div").html("0")
-        $("[data-prizes] img").each(function(){
-         if(prizeMatches[($(this).attr('src'))]){
-            $("[data-matches] div:nth-child(" + prizeNumber +")").html(prizeMatches[($(this).attr('src'))])
-         }
-         prizeNumber += 1;
+        $("[data-matches]").html("0 matches");
+        var prizesVisible = Object.keys(prizeMatches);
+        prizesVisible.forEach(function(prize){
+            $("[data-prize='" + prize + "'] [data-matches]").html(prizeMatches[prize] + " matches");
         });
     },
     disableClicks: function(){

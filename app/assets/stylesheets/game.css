@@ -2,6 +2,7 @@
     max-height: 800px;
     max-width: 1220px;
     display: inline-flex;
+    margin: auto;
 }
 .walmart {
     font-family: Arial,sans-serif;
@@ -151,44 +152,36 @@
     right: -3px;
     top: 45%;
 }
-/*.preload-imgs img {
-    height: 0px;
-    width: 0px;
-    margin: 0px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}*/
 .buffer {
     float: left;
     width: 200px;
 }
 .prize-gallery {
-    float: right;
     width: 200px;
-    margin-left: 3rem;
-    margin-top: 5rem;
-    display: inline-flex;
+    margin: 2rem 0 0 1rem;
 }
-.prize-gallery .prizes {
-    float: left;
+[data-prize] {
+    background-color: rgba(200, 255, 200, .5);
+    margin: 1rem 0;
+    border-radius: 5px;
 }
-.prize-gallery .prizes img {
+
+.prizes img {
     height: 100px;
     background-color: rgba(60, 225, 100, .7);
     border-radius: 5px;
 }
-.prize-gallery .match-counter {
-    float: right;
-    width: 100px;
 
-}
-.prize-gallery .match-counter .number {
-    height: 107px;
-    width: 10px;
-    /*background-color: #hhh;*/
+[data-prize] > * {
     vertical-align: middle;
 }
+[data-prize] span {
+    padding-left: .5rem;
+    margin: 1rem auto;
+    color: rgba(100, 100, 100, 1);
+    text-decoration: 
+}
+
 .fa-arrow-left:before,
 .fa-arrow-right:before {
     line-height: 2.9rem;

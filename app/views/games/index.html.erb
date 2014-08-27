@@ -199,22 +199,30 @@
     </div>
     <div class="prize-gallery">
         <div data-prizes class="prizes">
-            <img src="<%= asset_path 'house.png' %>" alt="house">
-            <img src="<%= asset_path 'car.png' %>" alt="car">
-            <img src="<%= asset_path 'cash.png' %>" alt="cash">
-            <img src="<%= asset_path 'shopping.png' %>" alt="shopping">
-            <img src="<%= asset_path 'vacation.png' %>" alt="vacation">
-            <img src="<%= asset_path 'ring.png' %>" alt="ring">
+            <div data-prize="<%= asset_path 'house.png' %>">
+                <img src="<%= asset_path 'house.png' %>" alt="house">
+                <span data-matches>0 matches</span>
+            </div>
+            <div data-prize="<%= asset_path 'car.png' %>">
+                <img src="<%= asset_path 'car.png' %>" alt="car">
+                <span data-matches>0 matches</span>
+            </div>
+            <div data-prize="<%= asset_path 'cash.png' %>">
+                <img src="<%= asset_path 'cash.png' %>" alt="cash">
+                <span data-matches>0 matches</span>
+            </div>
+            <div data-prize="<%= asset_path 'shopping.png' %>">
+                <img src="<%= asset_path 'shopping.png' %>" alt="shopping">
+                <span data-matches>0 matches</span>
+            </div>
+            <div data-prize="<%= asset_path 'vacation.png' %>">
+                <img src="<%= asset_path 'vacation.png' %>" alt="vacation">
+                <span data-matches>0 matches</span>
+            </div>
+            <div data-prize="<%= asset_path 'ring.png' %>">
+                <img src="<%= asset_path 'ring.png' %>" alt="ring">
+                <span data-matches>0 matches</span>
+            </div>
         </div>
-        <center>
-        <div data-matches class="match-counter">
-            <div class="number">0</div>
-            <div class="number">0</div>
-            <div class="number">0</div>
-            <div class="number">0</div>
-            <div class="number">0</div>
-            <div class="number">0</div>
-        </div>
-        </center>
     </div>
 </div>
