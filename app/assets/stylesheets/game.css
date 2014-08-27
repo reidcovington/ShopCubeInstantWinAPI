@@ -178,10 +178,10 @@
 [data-prize] > * {
     vertical-align: middle;
 }
-[data-prize] span {
+[data-prize] > span {
     padding-left: .5rem;
     margin: 1rem auto;
-    color: rgba(100, 100, 100, 1);
+    color: rgba(125, 125, 125, 1);
     transition: color .3s linear;
 }
 
