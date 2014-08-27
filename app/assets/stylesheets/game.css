@@ -167,9 +167,12 @@
 }
 
 .prizes img {
-    height: 100px;
+    height: 90px;
     background-color: rgba(60, 225, 100, .7);
     border-radius: 5px;
+    border: 1px solid rgba(60, 225, 100, .7);
+    padding: 5px;
+    transition: background-color .3s linear;
 }
 
 [data-prize] > * {
@@ -179,7 +182,7 @@
     padding-left: .5rem;
     margin: 1rem auto;
     color: rgba(100, 100, 100, 1);
-    text-decoration: 
+    transition: color .3s linear;
 }
 
 .fa-arrow-left:before,
@@ -194,4 +197,37 @@
     position: absolute;
     right: 18rem;
     color: #777777
+}
+
+[data-prize].button-red {
+    background-color: orangered;
+    transition: background-color .3s linear;
+}
+[data-prize].button-red:hover {
+    background-color: orange;
+}
+span.claim-prize {
+    color: white;
+    font-weight: 500;
+    padding-left: 1rem;
+    letter-spacing: 1px;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+}
+.modal-text {
+    position: fixed;
+    background-color: rgba(255, 255, 255, 1);
+    top: 25%;
+    right: 25%;
+    bottom: 40%;
+    left: 25%;
+    border-radius: 25px;
+    padding: 5rem;
 }

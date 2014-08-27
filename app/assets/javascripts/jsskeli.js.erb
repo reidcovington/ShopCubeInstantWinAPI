@@ -38,9 +38,9 @@ GameController.prototype = {
         this.gameView.drawMoveCount(this.totalMoves);
         var prizeMatches = this.calcPrizeMatches();
         this.gameView.drawPrizeMatches(prizeMatches);
-        var totalMatch = this.calcMatches();
-        if(totalMatch){
-            this.triggerWin();
+        var winningPrize = this.calcMatches();
+        if(winningPrize){
+            this.triggerWin(winningPrize);
         }else if(this.totalMoves === 0){
             this.triggerLose();
         }
@@ -48,7 +48,7 @@ GameController.prototype = {
     calcMatches: function(){
         var currentFaces = this.fetchAllFacingPrizes();
         if(_.uniq(currentFaces).length === 1){
-            return true;
+            return currentFaces[0];
         }else{
             return false;
         }
@@ -69,16 +69,19 @@ GameController.prototype = {
         }
         return facing;
     },
-    triggerWin: function(){
+    triggerWin: function(winningPrize){
         this.gameView.disableClicks();
         setTimeout(function(){
-            alert("You've Won!")
-        }, 500)
+            // alert("You've Won!")
+            this.gameView.drawWinState(winningPrize);
+            this.gameView.listenForClaim(winningPrize);
+        }.bind(this), 500)
     },
     triggerLose: function(){
         this.gameView.disableClicks();
         setTimeout(function(){
-            alert("You LOST!!!! TRY AGAIN!!")
+            // alert("You Lost! Please email steve@shopcube.com for further inquiry.")
+            $('.modal.lose').show();
         }, 500)
     }
 };
@@ -118,6 +121,17 @@ GameView.prototype = {
         setTimeout(function(){
             $(buttonSets[buttonIndex]).fadeIn(300);
         }, 150);
+    },
+    drawWinState: function(winningPrize){
+        $("[data-prize='" + winningPrize + "'] img").attr("style", "background-color: yellow; border: 1px solid goldenrod");
+        $("[data-prize='" + winningPrize + "'] span").html("CLAIM").attr("class", "claim-prize");
+        $("[data-prize='" + winningPrize + "']").attr("class", "button-red");
+    },
+    listenForClaim: function(winningPrize){
+        $("[data-prize='" + winningPrize + "']").click(function(event){
+            event.preventDefault();
+            $('.modal.win').show();
+        })
     }
 };
 
