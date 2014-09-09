@@ -104,7 +104,7 @@ GameView.prototype = {
         $("[data-matches]").html("0 matches");
         var prizesVisible = Object.keys(prizeMatches);
         prizesVisible.forEach(function(prize){
-            $("[data-prize='" + prize + "'] [data-matches]").html(prizeMatches[prize] + " matches");
+            $("[data-prize='" + prize + "'] [data-matches]").html("<span style='font-weight: bolder; color: rgba(85, 85, 85, 1)'>" + prizeMatches[prize] + " matches</span>");
         });
     },
     disableClicks: function(){
